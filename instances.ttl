@@ -5,8 +5,8 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix fo: <https://purl.org/family/> .
-@prefix meo: <https://purl.org/meo/> .
+@prefix fo: <http://purl.org/family/> .
+@prefix meo: <http://purl.org/meo/> .
 @prefix soc: <https://purl.org/social/relations/> .
 @prefix loc: <https://purl.org/location/> .
 @prefix evnt: <https://purl.org/event/> .
@@ -15,8 +15,8 @@
 @base <https://purl.org/narn/> .
 
 <https://purl.org/narn/> rdf:type owl:Ontology ;
-    owl:imports <https://purl.org/family/> ;
-    owl:imports <https://purl.org/meo/> ;
+    owl:imports <http://purl.org/family/> ;
+    owl:imports <http://purl.org/meo/> ;
     owl:imports <https://purl.org/social/relations/> ;
     owl:imports <https://purl.org/location/> ;
     owl:imports <https://purl.org/event/> ;
@@ -45,7 +45,7 @@ narn:Morwen a meo:Adan, fo:Female ;
     rdfs:label "Morwen"@sjn ;
     skos:altLabel "Eledhwen"@sjn, "Elven-fair"@en ;
     fo:isMarriedTo narn:Hurin ;
-    fo:isSisterOf narn:Rian ;
+    fo:isASisterOf narn:Rian ;
     fo:isTheMotherOf narn:Turin, narn:Nienor, narn:Lalaith ;
     soc:loved narn:Hurin ;
     soc:livedIn narn:Dor-lomin, narn:Doriath .
@@ -61,7 +61,7 @@ narn:Rian a meo:Adan, fo:Female ;
     rdfs:label "Rian"@sjn ;
     fo:isMarriedTo narn:Huor ;
     fo:isTheMotherOf narn:Tuor ;
-    fo:isSisterOf narn:Morwen .
+    fo:isASisterOf narn:Morwen .
 
 narn:Turin a meo:Adan, fo:Male ;
     rdfs:label "Turin"@en ;
