@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
     <uri id="Imports Wizard Entry 1" name="https://purl.org/region/rcc8/" uri="rcc.ttl"/>
-    <uri id="Imports Wizard Entry 2" name="https://purl.org/family/" uri="fo.ttl"/>
-    <uri id="Imports Wizard Entry 3" name="https://purl.org/meo/" uri="meo.ttl"/>
+    <uri id="Imports Wizard Entry 2" name="http://purl.org/family/" uri="fo.ttl"/>
+    <uri id="Imports Wizard Entry 3" name="http://purl.org/meo/" uri="meo.ttl"/>
     <uri id="Imports Wizard Entry 4" name="https://purl.org/social/relations/" uri="social.ttl"/>
     <uri id="Imports Wizard Entry 5" name="https://purl.org/location/" uri="places.ttl"/>
     <uri id="Imports Wizard Entry 6" name="https://purl.org/event/" uri="events.ttl"/>
