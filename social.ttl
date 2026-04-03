@@ -1,0 +1,164 @@
+@prefix : <https://purl.org/social/relations/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://purl.org/social/relations/> .
+
+<https://purl.org/social/relations/> rdf:type owl:Ontology ;
+    rdfs:label "Social Relations Ontology"@en ;
+    rdfs:comment "An ontology for social relationships between characters in a story."@en .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://purl.org/social/relations/killed
+:killed rdf:type owl:ObjectProperty ,
+                 owl:AsymmetricProperty ,
+                 owl:IrreflexiveProperty ;
+        rdfs:comment "A character who has killed another character."@en ;
+        rdfs:label "killed"@en .
+
+
+###  https://purl.org/social/relations/loved
+:loved rdf:type owl:ObjectProperty ;
+       rdfs:comment "A character who has romantic or deep emotional feelings for another character."@en ;
+       rdfs:label "loved"@en .
+
+
+###  https://purl.org/social/relations/hated
+:hated rdf:type owl:ObjectProperty ;
+       rdfs:comment "A character who has strong feelings of hatred toward another character."@en ;
+       rdfs:label "hated"@en .
+
+
+###  https://purl.org/social/relations/hasFriend
+:hasFriend rdf:type owl:ObjectProperty ,
+                    owl:SymmetricProperty ;
+           rdfs:comment "A friendly bond between two characters."@en ;
+           rdfs:label "has friend"@en .
+
+
+###  https://purl.org/social/relations/wasTheBestFriendOf
+:wasTheBestFriendOf rdf:type owl:ObjectProperty ,
+                             owl:SymmetricProperty ;
+                    rdfs:subPropertyOf :hasFriend ;
+                    rdfs:comment "The strongest form of friendship between two characters."@en ;
+                    rdfs:label "was the best friend of"@en .
+
+
+###  https://purl.org/social/relations/served
+:served rdf:type owl:ObjectProperty ,
+                 owl:AsymmetricProperty ;
+        rdfs:comment "A character who serves or is loyal to another character or entity."@en ;
+        rdfs:label "served"@en .
+
+
+###  https://purl.org/social/relations/wasTheKingOf
+:wasTheKingOf rdf:type owl:ObjectProperty ,
+                       owl:AsymmetricProperty ;
+              rdfs:comment "A character who rules over a realm or people as their king."@en ;
+              rdfs:label "was the king of"@en .
+
+
+###  https://purl.org/social/relations/livedIn
+:livedIn rdf:type owl:ObjectProperty ;
+         rdfs:comment "A character who resided or lived in a particular place."@en ;
+         rdfs:label "lived in"@en .
+
+
+###  https://purl.org/social/relations/isAllyOf
+:isAllyOf rdf:type owl:ObjectProperty ,
+                   owl:SymmetricProperty ;
+          rdfs:comment "Two characters who fight or work on the same side."@en ;
+          rdfs:label "is ally of"@en .
+
+
+###  https://purl.org/social/relations/isEnemyOf
+:isEnemyOf rdf:type owl:ObjectProperty ,
+                    owl:SymmetricProperty ;
+           rdfs:comment "Two characters who are in opposition or conflict."@en ;
+           rdfs:label "is enemy of"@en .
+
+
+###  https://purl.org/social/relations/isLordOf
+:isLordOf rdf:type owl:ObjectProperty ,
+                   owl:AsymmetricProperty ;
+          owl:inverseOf :isServantOf ;
+          rdfs:comment "A character who has authority over another character."@en ;
+          rdfs:label "is lord of"@en .
+
+
+###  https://purl.org/social/relations/isServantOf
+:isServantOf rdf:type owl:ObjectProperty ,
+                      owl:AsymmetricProperty ;
+             owl:inverseOf :isLordOf ;
+             rdfs:comment "A character who serves and obeys another character."@en ;
+             rdfs:label "is servant of"@en .
+
+
+###  https://purl.org/social/relations/isMentorOf
+:isMentorOf rdf:type owl:ObjectProperty ,
+                     owl:AsymmetricProperty ;
+            rdfs:comment "A character who guides or teaches another character."@en ;
+            rdfs:label "is mentor of"@en .
+
+
+###  https://purl.org/social/relations/isMarriedTo
+:isMarriedTo rdf:type owl:ObjectProperty ,
+                      owl:SymmetricProperty ;
+             rdfs:comment "Two characters united through marriage."@en ;
+             rdfs:label "is married to"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://purl.org/social/relations/SocialRole
+:SocialRole rdf:type owl:Class ;
+            rdfs:comment "A role that a character can have in relation to other characters in a story."@en ;
+            rdfs:label "Social Role"@en .
+
+
+###  https://purl.org/social/relations/Leader
+:Leader rdf:type owl:Class ;
+        rdfs:subClassOf :SocialRole ;
+        rdfs:comment "A character who has authority and commands others."@en ;
+        rdfs:label "Leader"@en .
+
+
+###  https://purl.org/social/relations/Servant
+:Servant rdf:type owl:Class ;
+         rdfs:subClassOf :SocialRole ;
+         rdfs:comment "A character who serves and obeys another character."@en ;
+         rdfs:label "Servant"@en .
+
+
+###  https://purl.org/social/relations/Ally
+:Ally rdf:type owl:Class ;
+      rdfs:subClassOf :SocialRole ;
+      rdfs:comment "A character who fights or works on the same side as another."@en ;
+      rdfs:label "Ally"@en .
+
+
+###  https://purl.org/social/relations/Enemy
+:Enemy rdf:type owl:Class ;
+       rdfs:subClassOf :SocialRole ;
+       rdfs:comment "A character who is in opposition or conflict with another."@en ;
+       rdfs:label "Enemy"@en .
+
+
+#################################################################
+#    Axioms
+#################################################################
+
+# Killing is disjoint with loving — a character cannot kill and love the same character
+# (Note: this is a story-logic simplification)
+:killed owl:propertyDisjointWith :loved .
+
+# Being an ally is disjoint with being an enemy
+:isAllyOf owl:propertyDisjointWith :isEnemyOf .

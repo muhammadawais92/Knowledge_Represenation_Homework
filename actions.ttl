@@ -1,0 +1,179 @@
+@prefix : <https://purl.org/action/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix evnt: <https://purl.org/event/> .
+@prefix loc: <https://purl.org/location/> .
+@prefix soc: <https://purl.org/social/relations/> .
+@base <https://purl.org/action/> .
+
+<https://purl.org/action/> rdf:type owl:Ontology ;
+                            owl:imports <https://purl.org/event/> ;
+                            rdfs:label "Actions Ontology"@en ;
+                            rdfs:comment "An ontology for actions performed by characters in a story."@en .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+:hasAgent rdf:type owl:ObjectProperty ;
+          rdfs:domain :Action ;
+          rdfs:label "has agent"@en ;
+          rdfs:comment "The character who actively and intentionally performs the action."@en .
+
+:hasPatient rdf:type owl:ObjectProperty ;
+            rdfs:domain :Action ;
+            rdfs:label "has patient"@en ;
+            rdfs:comment "The character or entity that is the target or recipient of the action."@en .
+
+:hasInstrument rdf:type owl:ObjectProperty ;
+               rdfs:domain :Action ;
+               rdfs:range :Instrument ;
+               rdfs:label "has instrument"@en ;
+               rdfs:comment "The object or tool used by the agent to perform the action."@en .
+
+:hasResult rdf:type owl:ObjectProperty ;
+           rdfs:domain :Action ;
+           rdfs:range evnt:Event ;
+           rdfs:label "has result"@en ;
+           rdfs:comment "The event that directly results from this action being performed."@en .
+
+:hasGoal rdf:type owl:ObjectProperty ;
+         rdfs:domain :IntentionalAction ;
+         rdfs:label "has goal"@en ;
+         rdfs:comment "The intended outcome or objective the agent wants to achieve."@en .
+
+:isPartOfEvent rdf:type owl:ObjectProperty ;
+               rdfs:domain :Action ;
+               rdfs:range evnt:Event ;
+               rdfs:label "is part of event"@en ;
+               rdfs:comment "The larger event of which this action is a component."@en .
+
+:performedAt rdf:type owl:ObjectProperty ;
+             rdfs:domain :Action ;
+             rdfs:range loc:Place ;
+             rdfs:label "performed at"@en ;
+             rdfs:comment "The place where this action was performed."@en .
+
+:precedes rdf:type owl:ObjectProperty ,
+                   owl:TransitiveProperty ;
+          owl:inverseOf :follows ;
+          rdfs:domain :Action ;
+          rdfs:range :Action ;
+          rdfs:label "precedes"@en ;
+          rdfs:comment "This action is performed before the other action."@en .
+
+:follows rdf:type owl:ObjectProperty ,
+                  owl:TransitiveProperty ;
+         owl:inverseOf :precedes ;
+         rdfs:domain :Action ;
+         rdfs:range :Action ;
+         rdfs:label "follows"@en ;
+         rdfs:comment "This action is performed after the other action."@en .
+
+#################################################################
+#    Data Properties
+#################################################################
+
+:isIntentional rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Action ;
+               rdfs:range xsd:boolean ;
+               rdfs:label "is intentional"@en ;
+               rdfs:comment "Whether the action was performed intentionally or accidentally."@en .
+
+#################################################################
+#    Classes
+#################################################################
+
+:Action rdf:type owl:Class ;
+        rdfs:label "Action"@en ;
+        rdfs:comment "Something done by a character, with an agent, an optional patient, and an optional instrument."@en .
+
+:IntentionalAction rdf:type owl:Class ;
+                   rdfs:subClassOf :Action ;
+                   rdfs:label "Intentional Action"@en ;
+                   rdfs:comment "An action deliberately performed by the agent with a specific goal."@en .
+
+:AccidentalAction rdf:type owl:Class ;
+                  rdfs:subClassOf :Action ;
+                  rdfs:label "Accidental Action"@en ;
+                  rdfs:comment "An action performed without intent or awareness of its consequences."@en .
+
+:KillingAction rdf:type owl:Class ;
+               rdfs:subClassOf :Action ;
+               rdfs:label "Killing Action"@en ;
+               rdfs:comment "An action in which the agent causes the death of the patient."@en .
+
+:AttackAction rdf:type owl:Class ;
+              rdfs:subClassOf :IntentionalAction ;
+              rdfs:label "Attack Action"@en ;
+              rdfs:comment "An action in which the agent physically attacks the patient."@en .
+
+:CursingAction rdf:type owl:Class ;
+               rdfs:subClassOf :IntentionalAction ;
+               rdfs:label "Cursing Action"@en ;
+               rdfs:comment "An action in which the agent places a curse on the patient."@en .
+
+:DeceivingAction rdf:type owl:Class ;
+                 rdfs:subClassOf :IntentionalAction ;
+                 rdfs:label "Deceiving Action"@en ;
+                 rdfs:comment "An action in which the agent intentionally misleads the patient."@en .
+
+:TravelAction rdf:type owl:Class ;
+              rdfs:subClassOf :Action ;
+              rdfs:label "Travel Action"@en ;
+              rdfs:comment "An action in which the agent moves from one place to another."@en .
+
+:SpeechAction rdf:type owl:Class ;
+              rdfs:subClassOf :Action ;
+              rdfs:label "Speech Action"@en ;
+              rdfs:comment "An action in which the agent communicates to the patient through speech."@en .
+
+:Instrument rdf:type owl:Class ;
+            rdfs:label "Instrument"@en ;
+            rdfs:comment "An object or tool used by a character to perform an action."@en .
+
+:Weapon rdf:type owl:Class ;
+        rdfs:subClassOf :Instrument ;
+        rdfs:label "Weapon"@en ;
+        rdfs:comment "An instrument specifically used for combat or killing."@en .
+
+:Sword rdf:type owl:Class ;
+       rdfs:subClassOf :Weapon ;
+       rdfs:label "Sword"@en ;
+       rdfs:comment "A bladed weapon used in close combat."@en .
+
+:MagicalArtifact rdf:type owl:Class ;
+                 rdfs:subClassOf :Instrument ;
+                 rdfs:label "Magical Artifact"@en ;
+                 rdfs:comment "An instrument with magical or supernatural properties."@en .
+
+#################################################################
+#    Axioms
+#################################################################
+
+[] rdf:type owl:AllDisjointClasses ;
+   owl:members ( :IntentionalAction :AccidentalAction ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+   owl:members ( :Weapon :MagicalArtifact ) .
+
+:Action rdfs:subClassOf [
+    rdf:type owl:Restriction ;
+    owl:onProperty :hasAgent ;
+    owl:minCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+:KillingAction rdfs:subClassOf [
+    rdf:type owl:Restriction ;
+    owl:onProperty :hasPatient ;
+    owl:cardinality "1"^^xsd:nonNegativeInteger
+] .
+
+:AttackAction rdfs:subClassOf [
+    rdf:type owl:Restriction ;
+    owl:onProperty :hasInstrument ;
+    owl:someValuesFrom :Weapon
+] .

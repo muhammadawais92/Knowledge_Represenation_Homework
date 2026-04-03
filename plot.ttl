@@ -1,0 +1,202 @@
+@prefix : <https://purl.org/plot/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix evnt: <https://purl.org/event/> .
+@base <https://purl.org/plot/> .
+
+<https://purl.org/plot/> rdf:type owl:Ontology ;
+                          owl:imports <https://purl.org/event/> ;
+                          rdfs:label "Plot Structure Ontology"@en ;
+                          rdfs:comment "An ontology for the narrative and literary structure of a story."@en .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+:hasNarrativeUnit rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Story ;
+                  rdfs:range :NarrativeUnit ;
+                  rdfs:comment "A story is composed of one or more narrative units such as acts or chapters."@en ;
+                  rdfs:label "has narrative unit"@en .
+
+:hasProtagonist rdf:type owl:ObjectProperty ;
+                rdfs:domain :Story ;
+                rdfs:comment "The main character around whom the story revolves."@en ;
+                rdfs:label "has protagonist"@en .
+
+:hasAntagonist rdf:type owl:ObjectProperty ;
+               rdfs:domain :Story ;
+               rdfs:comment "The character or force that opposes the protagonist."@en ;
+               rdfs:label "has antagonist"@en .
+
+:hasNarrator rdf:type owl:ObjectProperty ;
+             rdfs:domain :Story ;
+             rdfs:comment "The character or entity through whose perspective the story is told."@en ;
+             rdfs:label "has narrator"@en .
+
+:hasTheme rdf:type owl:ObjectProperty ;
+          rdfs:domain :Story ;
+          rdfs:range :Theme ;
+          rdfs:comment "A central idea or message that the story explores."@en ;
+          rdfs:label "has theme"@en .
+
+:hasClimaxEvent rdf:type owl:ObjectProperty ;
+                rdfs:domain :Story ;
+                rdfs:range evnt:Event ;
+                rdfs:comment "The event in the story that represents the peak of tension or conflict."@en ;
+                rdfs:label "has climax event"@en .
+
+:hasOpeningEvent rdf:type owl:ObjectProperty ;
+                 rdfs:domain :Story ;
+                 rdfs:range evnt:Event ;
+                 rdfs:comment "The event that begins or introduces the story."@en ;
+                 rdfs:label "has opening event"@en .
+
+:hasClosingEvent rdf:type owl:ObjectProperty ;
+                 rdfs:domain :Story ;
+                 rdfs:range evnt:Event ;
+                 rdfs:comment "The event that concludes or ends the story."@en ;
+                 rdfs:label "has closing event"@en .
+
+:hasPlotTwist rdf:type owl:ObjectProperty ;
+              rdfs:domain :Story ;
+              rdfs:range :PlotTwist ;
+              rdfs:comment "An unexpected turn of events that changes the direction of the story."@en ;
+              rdfs:label "has plot twist"@en .
+
+:nextUnit rdf:type owl:ObjectProperty ,
+                   owl:AsymmetricProperty ,
+                   owl:IrreflexiveProperty ;
+          owl:inverseOf :previousUnit ;
+          rdfs:domain :NarrativeUnit ;
+          rdfs:range :NarrativeUnit ;
+          rdfs:comment "The narrative unit that follows this one in the story."@en ;
+          rdfs:label "next unit"@en .
+
+:previousUnit rdf:type owl:ObjectProperty ,
+                       owl:AsymmetricProperty ,
+                       owl:IrreflexiveProperty ;
+              owl:inverseOf :nextUnit ;
+              rdfs:domain :NarrativeUnit ;
+              rdfs:range :NarrativeUnit ;
+              rdfs:comment "The narrative unit that precedes this one in the story."@en ;
+              rdfs:label "previous unit"@en .
+
+:describesEvent rdf:type owl:ObjectProperty ;
+                rdfs:domain :NarrativeUnit ;
+                rdfs:range evnt:Event ;
+                rdfs:comment "The real-world event within the story that this narrative unit describes."@en ;
+                rdfs:label "describes event"@en .
+
+:hasNarrativeRole rdf:type owl:ObjectProperty ;
+                  rdfs:range :NarrativeRole ;
+                  rdfs:comment "The narrative role that a character plays in a story."@en ;
+                  rdfs:label "has narrative role"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+:Story rdf:type owl:Class ;
+       rdfs:comment "A complete narrative work with a beginning, middle, and end, involving characters and events."@en ;
+       rdfs:label "Story"@en .
+
+:NarrativeUnit rdf:type owl:Class ;
+               rdfs:comment "A structural division of a story such as an act, chapter, or scene."@en ;
+               rdfs:label "Narrative Unit"@en .
+
+:Act rdf:type owl:Class ;
+     rdfs:subClassOf :NarrativeUnit ;
+     rdfs:comment "A major division of a story, typically containing multiple chapters or scenes."@en ;
+     rdfs:label "Act"@en .
+
+:Chapter rdf:type owl:Class ;
+         rdfs:subClassOf :NarrativeUnit ;
+         rdfs:comment "A subdivision of a story or act, focusing on a specific sequence of events."@en ;
+         rdfs:label "Chapter"@en .
+
+:Scene rdf:type owl:Class ;
+       rdfs:subClassOf :NarrativeUnit ;
+       rdfs:comment "The smallest narrative unit, describing a single situation at a specific place and time."@en ;
+       rdfs:label "Scene"@en .
+
+:PlotTwist rdf:type owl:Class ;
+           rdfs:comment "An unexpected development in the story that surprises the reader."@en ;
+           rdfs:label "Plot Twist"@en .
+
+:Climax rdf:type owl:Class ;
+        rdfs:subClassOf :NarrativeUnit ;
+        rdfs:comment "The point of highest tension or drama in the story."@en ;
+        rdfs:label "Climax"@en .
+
+:Resolution rdf:type owl:Class ;
+            rdfs:subClassOf :NarrativeUnit ;
+            rdfs:comment "The final part of the story where conflicts are resolved."@en ;
+            rdfs:label "Resolution"@en .
+
+:Exposition rdf:type owl:Class ;
+            rdfs:subClassOf :NarrativeUnit ;
+            rdfs:comment "The opening part of the story that introduces characters, setting, and background."@en ;
+            rdfs:label "Exposition"@en .
+
+:Theme rdf:type owl:Class ;
+       rdfs:comment "A central idea or message that the story explores throughout its narrative."@en ;
+       rdfs:label "Theme"@en .
+
+:NarrativeRole rdf:type owl:Class ;
+               rdfs:comment "A role that a character plays in the narrative structure of a story."@en ;
+               rdfs:label "Narrative Role"@en .
+
+:ProtagonistRole rdf:type owl:Class ;
+                 rdfs:subClassOf :NarrativeRole ;
+                 rdfs:comment "The narrative role of the main character who drives the story forward."@en ;
+                 rdfs:label "Protagonist Role"@en .
+
+:AntagonistRole rdf:type owl:Class ;
+                rdfs:subClassOf :NarrativeRole ;
+                rdfs:comment "The narrative role of the character or force that opposes the protagonist."@en ;
+                rdfs:label "Antagonist Role"@en .
+
+:SupportingRole rdf:type owl:Class ;
+                rdfs:subClassOf :NarrativeRole ;
+                rdfs:comment "The narrative role of a character who supports or assists the protagonist."@en ;
+                rdfs:label "Supporting Role"@en .
+
+
+#################################################################
+#    Axioms
+#################################################################
+
+# Climax, Resolution and Exposition are all disjoint narrative units
+[] rdf:type owl:AllDisjointClasses ;
+   owl:members ( :Climax :Resolution :Exposition ) .
+
+# Protagonist and Antagonist roles are disjoint
+[] rdf:type owl:AllDisjointClasses ;
+   owl:members ( :ProtagonistRole :AntagonistRole ) .
+
+# Every Story must have at least one protagonist
+:Story rdfs:subClassOf [
+    rdf:type owl:Restriction ;
+    owl:onProperty :hasProtagonist ;
+    owl:minCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+# Every Story must have at least one opening event
+:Story rdfs:subClassOf [
+    rdf:type owl:Restriction ;
+    owl:onProperty :hasOpeningEvent ;
+    owl:minCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+# Every Story must have at least one closing event
+:Story rdfs:subClassOf [
+    rdf:type owl:Restriction ;
+    owl:onProperty :hasClosingEvent ;
+    owl:minCardinality "1"^^xsd:nonNegativeInteger
+] .

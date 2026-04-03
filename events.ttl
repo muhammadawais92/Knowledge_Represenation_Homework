@@ -1,0 +1,258 @@
+@prefix : <https://purl.org/event/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix loc: <https://purl.org/location/> .
+@prefix soc: <https://purl.org/social/relations/> .
+@base <https://purl.org/event/> .
+
+<https://purl.org/event/> rdf:type owl:Ontology ;
+                           owl:imports <https://purl.org/location/> ;
+                           owl:imports <https://purl.org/social/relations/> ;
+                           rdfs:label "Events Ontology"@en ;
+                           rdfs:comment "An ontology for events, temporal relations, and their links to characters and places in a story."@en .
+
+#################################################################
+#    Object Properties - Event Links
+#################################################################
+
+:involvedCharacter rdf:type owl:ObjectProperty ;
+                   rdfs:domain :Event ;
+                   rdfs:label "involved character"@en ;
+                   rdfs:comment "A character who participates in or is part of an event."@en .
+
+:occurredAt rdf:type owl:ObjectProperty ;
+            rdfs:domain :Event ;
+            rdfs:range loc:Place ;
+            rdfs:label "occurred at"@en ;
+            rdfs:comment "The place where an event took place."@en .
+
+:performedBy rdf:type owl:ObjectProperty ;
+             rdfs:domain :Event ;
+             rdfs:label "performed by"@en ;
+             rdfs:comment "The character who actively performed or caused the event."@en .
+
+:hasVictim rdf:type owl:ObjectProperty ;
+           rdfs:domain :Event ;
+           rdfs:label "has victim"@en ;
+           rdfs:comment "The character who is the target or victim of an event."@en .
+
+:hasOutcome rdf:type owl:ObjectProperty ;
+            rdfs:domain :Event ;
+            rdfs:range :Event ;
+            rdfs:label "has outcome"@en ;
+            rdfs:comment "Another event that directly results from this event."@en .
+
+:isPartOf rdf:type owl:ObjectProperty ,
+                   owl:TransitiveProperty ;
+          rdfs:domain :Event ;
+          rdfs:range :Event ;
+          rdfs:label "is part of"@en ;
+          rdfs:comment "An event that is a sub-event of a larger event."@en .
+
+:hasPart rdf:type owl:ObjectProperty ,
+                  owl:TransitiveProperty ;
+         owl:inverseOf :isPartOf ;
+         rdfs:domain :Event ;
+         rdfs:range :Event ;
+         rdfs:label "has part"@en ;
+         rdfs:comment "A larger event that contains smaller sub-events."@en .
+
+:begets rdf:type owl:ObjectProperty ;
+        rdfs:domain :Birth ;
+        rdfs:label "begets"@en ;
+        rdfs:comment "The character who is born as a result of this birth event."@en .
+
+:hasTraveller rdf:type owl:ObjectProperty ;
+              rdfs:domain :Travel ;
+              rdfs:label "has traveller"@en ;
+              rdfs:comment "A character who travels during a journey or travel event."@en .
+
+#################################################################
+#    Object Properties - Allen Temporal Relations
+#################################################################
+
+:precedes rdf:type owl:ObjectProperty ,
+                   owl:TransitiveProperty ;
+          owl:inverseOf :follows ;
+          rdfs:domain :Event ;
+          rdfs:range :Event ;
+          rdfs:label "precedes"@en ;
+          rdfs:comment "This event ends completely before the other event starts."@en .
+
+:follows rdf:type owl:ObjectProperty ,
+                  owl:TransitiveProperty ;
+         owl:inverseOf :precedes ;
+         rdfs:domain :Event ;
+         rdfs:range :Event ;
+         rdfs:label "follows"@en ;
+         rdfs:comment "This event starts completely after the other event has ended."@en .
+
+:before rdf:type owl:ObjectProperty ,
+                 owl:TransitiveProperty ;
+        owl:inverseOf :after ;
+        rdfs:subPropertyOf :precedes ;
+        rdfs:domain :Event ;
+        rdfs:range :Event ;
+        rdfs:label "before"@en ;
+        rdfs:comment "Allen relation: this event ends completely before the other event starts."@en .
+
+:after rdf:type owl:ObjectProperty ,
+                owl:TransitiveProperty ;
+       owl:inverseOf :before ;
+       rdfs:domain :Event ;
+       rdfs:range :Event ;
+       rdfs:label "after"@en ;
+       rdfs:comment "Allen relation: this event starts completely after the other event has ended."@en .
+
+:meets rdf:type owl:ObjectProperty ;
+       owl:inverseOf :metBy ;
+       rdfs:domain :Event ;
+       rdfs:range :Event ;
+       rdfs:label "meets"@en ;
+       rdfs:comment "Allen relation: this event ends exactly when the other event starts, with no gap."@en .
+
+:metBy rdf:type owl:ObjectProperty ;
+       owl:inverseOf :meets ;
+       rdfs:domain :Event ;
+       rdfs:range :Event ;
+       rdfs:label "met by"@en ;
+       rdfs:comment "Allen relation: this event starts exactly when the other event ends."@en .
+
+:overlaps rdf:type owl:ObjectProperty ;
+          owl:inverseOf :overlappedBy ;
+          rdfs:domain :Event ;
+          rdfs:range :Event ;
+          rdfs:label "overlaps"@en ;
+          rdfs:comment "Allen relation: this event starts before the other and they share a common period."@en .
+
+:overlappedBy rdf:type owl:ObjectProperty ;
+              owl:inverseOf :overlaps ;
+              rdfs:domain :Event ;
+              rdfs:range :Event ;
+              rdfs:label "overlapped by"@en ;
+              rdfs:comment "Allen relation: this event starts after the other has started and ends after the other."@en .
+
+:during rdf:type owl:ObjectProperty ;
+        owl:inverseOf :contains ;
+        rdfs:domain :Event ;
+        rdfs:range :Event ;
+        rdfs:label "during"@en ;
+        rdfs:comment "Allen relation: this event is entirely within the other event."@en .
+
+:contains rdf:type owl:ObjectProperty ;
+          owl:inverseOf :during ;
+          rdfs:domain :Event ;
+          rdfs:range :Event ;
+          rdfs:label "contains"@en ;
+          rdfs:comment "Allen relation: this event entirely contains the other event."@en .
+
+:starts rdf:type owl:ObjectProperty ;
+        owl:inverseOf :startedBy ;
+        rdfs:domain :Event ;
+        rdfs:range :Event ;
+        rdfs:label "starts"@en ;
+        rdfs:comment "Allen relation: this event starts at the same time as the other but ends before it."@en .
+
+:startedBy rdf:type owl:ObjectProperty ;
+           owl:inverseOf :starts ;
+           rdfs:domain :Event ;
+           rdfs:range :Event ;
+           rdfs:label "started by"@en ;
+           rdfs:comment "Allen relation: this event starts at the same time as the other but ends after it."@en .
+
+:finishes rdf:type owl:ObjectProperty ;
+          owl:inverseOf :finishedBy ;
+          rdfs:domain :Event ;
+          rdfs:range :Event ;
+          rdfs:label "finishes"@en ;
+          rdfs:comment "Allen relation: this event ends at the same time as the other but starts after it."@en .
+
+:finishedBy rdf:type owl:ObjectProperty ;
+            owl:inverseOf :finishes ;
+            rdfs:domain :Event ;
+            rdfs:range :Event ;
+            rdfs:label "finished by"@en ;
+            rdfs:comment "Allen relation: this event ends at the same time as the other but starts before it."@en .
+
+:equalTime rdf:type owl:ObjectProperty ,
+                    owl:SymmetricProperty ;
+           rdfs:domain :Event ;
+           rdfs:range :Event ;
+           rdfs:label "equal time"@en ;
+           rdfs:comment "Allen relation: this event starts and ends at exactly the same time as the other."@en .
+
+#################################################################
+#    Data Properties
+#################################################################
+
+:hasYear rdf:type owl:DatatypeProperty ;
+         rdfs:domain :Event ;
+         rdfs:range xsd:integer ;
+         rdfs:label "has year"@en ;
+         rdfs:comment "The year in the story timeline when this event occurred."@en .
+
+#################################################################
+#    Classes
+#################################################################
+
+:Event rdf:type owl:Class ;
+       rdfs:label "Event"@en ;
+       rdfs:comment "Something that happens at a place and time, involving one or more characters."@en .
+
+:Battle rdf:type owl:Class ;
+        rdfs:subClassOf :Event ;
+        rdfs:label "Battle"@en ;
+        rdfs:comment "A violent armed conflict between two or more groups of characters."@en .
+
+:Siege rdf:type owl:Class ;
+       rdfs:subClassOf :Battle ;
+       rdfs:label "Siege"@en ;
+       rdfs:comment "A military event in which a place is surrounded and attacked over time."@en .
+
+:Meeting rdf:type owl:Class ;
+         rdfs:subClassOf :Event ;
+         rdfs:label "Meeting"@en ;
+         rdfs:comment "An encounter between two or more characters at a specific place and time."@en .
+
+:Travel rdf:type owl:Class ;
+        rdfs:subClassOf :Event ;
+        rdfs:label "Travel"@en ;
+        rdfs:comment "A travel event in which a character moves from one place to another."@en .
+
+:Birth rdf:type owl:Class ;
+       rdfs:subClassOf :Event ;
+       rdfs:label "Birth"@en ;
+       rdfs:comment "The event of a character coming into existence."@en .
+
+:Death rdf:type owl:Class ;
+       rdfs:subClassOf :Event ;
+       rdfs:label "Death"@en ;
+       rdfs:comment "The event of a character ceasing to exist or being killed."@en .
+
+:Curse rdf:type owl:Class ;
+       rdfs:subClassOf :Event ;
+       rdfs:label "Curse"@en ;
+       rdfs:comment "An event in which a character is afflicted with a magical or supernatural burden."@en .
+
+:Instant rdf:type owl:Class ;
+         rdfs:label "Instant"@en ;
+         rdfs:comment "A single point in time with no duration, used to anchor events on a timeline."@en .
+
+#################################################################
+#    Axioms
+#################################################################
+
+[] rdf:type owl:AllDisjointClasses ;
+   owl:members ( :Birth :Death ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+   owl:members ( :Battle :Meeting ) .
+
+:Event rdfs:subClassOf [
+    rdf:type owl:Restriction ;
+    owl:onProperty :occurredAt ;
+    owl:minCardinality "1"^^xsd:nonNegativeInteger
+] .
