@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Story Plot Ontology — Documentation</title>
+<style>
+  body {
+    font-family: Georgia, serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #111;
+    max-width: 860px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+  h1 { font-size: 1.8em; margin-bottom: 4px; }
+  h2 { font-size: 1.3em; margin-top: 2em; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+  h3 { font-size: 1.05em; margin-top: 1.5em; }
+  p { margin: 0.6em 0; }
+  a { color: #111; }
+  code {
+    font-family: monospace;
+    font-size: 0.9em;
+    background: #f4f4f4;
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+  pre {
+    font-family: monospace;
+    font-size: 0.88em;
+    background: #f4f4f4;
+    padding: 12px 16px;
+    border-left: 3px solid #999;
+    overflow-x: auto;
+    line-height: 1.6;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92em;
+    margin: 1em 0;
+  }
+  th {
+    background: #eee;
+    text-align: left;
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+  }
+  td {
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #fafafa; }
+  .meta { color: #444; font-size: 0.95em; margin-top: 4px; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 2em 0; }
+</style>
+</head>
+<body>
+
+<h1>Story Plot Ontology</h1>
+<p class="meta">
+  Muhammad Awais &nbsp;|&nbsp;
+  <a href="https://github.com/muhammadawais92/Knowledge_Represenation_Homework" target="_blank">GitHub Repository</a>
+</p>
+
+<hr>
+
+<h2>Abstract</h2>
+<p>
+  This ontology models the structure of story plots using OWL 2, expressed in Turtle format. The story used as the reference case is the <em>Narn i Chîn Húrin</em> (Tale of the Children of Húrin) by J.R.R. Tolkien. The model is divided into five modules covering social relations, places, events, narrative structure, and actions. A separate instance file applies these modules to characters, locations, and events from the story.
+</p>
+
+<h2>Introduction</h2>
+<p>
+  This project is a modular OWL ontology designed to model the story of <em>Narn i Chîn Húrin</em>. It is split into separate modules for family, locations, and events to keep the design clean and organized. I focused on adding rich axioms, like property chains for kinship, to automatically infer relationships between characters. The final <code>instances.ttl</code> uses these rules to track Túrin's life and answer specific competency questions about the plot.
+</p>
+<p>
+  A story like the <em>Narn i Chîn Húrin</em> involves many overlapping elements: characters of different races with complex family and social ties, events that happen in sequence or in parallel, places nested inside larger regions, and a narrative arc with a clear structure. Representing this in a way a computer can reason over requires a formal knowledge model.
+</p>
+<p>
+  This ontology defines the classes and properties needed to describe these elements generically. The instance file then applies them to the specific story. The ontology is split into separate modules so that each concern stays isolated and reusable.
+</p>
+<p>
+  Three files are reused without modification: <code>fo.ttl</code> (family relations), <code>meo.ttl</code> (Middle-earth races and beings), and <code>rcc.ttl</code> (spatial topology based on RCC8). The remaining five modules were written for this project.
+</p>
+
+<h2>Modules Overview</h2>
+<table>
+  <tr>
+    <th>File</th>
+    <th>Prefix</th>
+    <th>IRI</th>
+    <th>Purpose</th>
+  </tr>
+  <tr>
+    <td><code>fo.ttl</code></td>
+    <td><code>fo:</code></td>
+    <td><code>http://purl.org/family/</code></td>
+    <td>Family relations: parent, child, sibling, spouse (provided)</td>
+  </tr>
+  <tr>
+    <td><code>meo.ttl</code></td>
+    <td><code>meo:</code></td>
+    <td><code>http://purl.org/meo/</code></td>
+    <td>Middle-earth races: Elf, Human, Dwarf, Dragon, Vala (provided)</td>
+  </tr>
+  <tr>
+    <td><code>rcc.ttl</code></td>
+    <td><code>rcc:</code></td>
+    <td><code>https://purl.org/region/rcc8/</code></td>
+    <td>Spatial topology: disconnected, overlaps, inside (provided)</td>
+  </tr>
+  <tr>
+    <td><code>social.ttl</code></td>
+    <td><code>soc:</code></td>
+    <td><code>https://purl.org/social/relations/</code></td>
+    <td>Social relations between characters: ally, enemy, killed, served</td>
+  </tr>
+  <tr>
+    <td><code>places.ttl</code></td>
+    <td><code>loc:</code></td>
+    <td><code>https://purl.org/location/</code></td>
+    <td>Place types and spatial part-of relations, imports rcc.ttl</td>
+  </tr>
+  <tr>
+    <td><code>events.ttl</code></td>
+    <td><code>evnt:</code></td>
+    <td><code>https://purl.org/event/</code></td>
+    <td>Event types and all 13 Allen temporal relations</td>
+  </tr>
+  <tr>
+    <td><code>plot.ttl</code></td>
+    <td><code>plot:</code></td>
+    <td><code>https://purl.org/plot/</code></td>
+    <td>Narrative structure: acts, themes, protagonist, plot twists</td>
+  </tr>
+  <tr>
+    <td><code>actions.ttl</code></td>
+    <td><code>act:</code></td>
+    <td><code>https://purl.org/action/</code></td>
+    <td>Actions with agent, patient, and instrument</td>
+  </tr>
+  <tr>
+    <td><code>instances.ttl</code></td>
+    <td><code>narn:</code></td>
+    <td><code>https://purl.org/narn/</code></td>
+    <td>Instance data from the Narn story using all modules above</td>
+  </tr>
+</table>
+
+<hr>
+
+<h2>1. Social Relations — <code>social.ttl</code></h2>
+<p>
+  This module defines social relationships between characters. The family ontology (<code>fo.ttl</code>) already covers kinship. This module adds everything else: alliances, enmity, authority, friendship, and emotional bonds. The prefixes and property names match the example data in the instructor's lab file (<code>narn.ttl</code>).
+</p>
+
+<h3>Classes</h3>
+<table>
+  <tr><th>Class</th><th>Description</th></tr>
+  <tr><td><code>SocialRole</code></td><td>A role a character can hold in relation to others. Parent class for all role subtypes.</td></tr>
+  <tr><td><code>Leader</code></td><td>A character with authority who commands others. Subclass of SocialRole.</td></tr>
+  <tr><td><code>Servant</code></td><td>A character who serves another. Subclass of SocialRole.</td></tr>
+  <tr><td><code>Ally</code></td><td>A character who fights on the same side as another. Subclass of SocialRole.</td></tr>
+  <tr><td><code>Enemy</code></td><td>A character who opposes another. Subclass of SocialRole.</td></tr>
+</table>
+
+<h3>Properties</h3>
+<table>
+  <tr><th>Property</th><th>Characteristics</th><th>Description</th></tr>
+  <tr><td><code>killed</code></td><td>Asymmetric, Irreflexive</td><td>One character caused the death of another. Disjoint with <code>loved</code>.</td></tr>
+  <tr><td><code>loved</code></td><td>—</td><td>A deep emotional or romantic attachment toward another character.</td></tr>
+  <tr><td><code>hated</code></td><td>—</td><td>Strong negative feelings toward another character.</td></tr>
+  <tr><td><code>hasFriend</code></td><td>Symmetric</td><td>A friendly bond between two characters.</td></tr>
+  <tr><td><code>wasTheBestFriendOf</code></td><td>Symmetric, subPropertyOf hasFriend</td><td>The closest form of friendship between two characters.</td></tr>
+  <tr><td><code>served</code></td><td>Asymmetric</td><td>A character who is loyal to and works for another.</td></tr>
+  <tr><td><code>wasTheKingOf</code></td><td>Asymmetric</td><td>A character who rules a realm or people.</td></tr>
+  <tr><td><code>livedIn</code></td><td>—</td><td>A place where a character resided at some point in the story.</td></tr>
+  <tr><td><code>isAllyOf</code></td><td>Symmetric</td><td>Two characters on the same side. Disjoint with <code>isEnemyOf</code>.</td></tr>
+  <tr><td><code>isEnemyOf</code></td><td>Symmetric</td><td>Two characters in opposition. Disjoint with <code>isAllyOf</code>.</td></tr>
+  <tr><td><code>isLordOf</code></td><td>Asymmetric</td><td>A character with authority over another. Inverse of <code>isServantOf</code>.</td></tr>
+  <tr><td><code>isServantOf</code></td><td>Asymmetric</td><td>A character who obeys another. Inverse of <code>isLordOf</code>.</td></tr>
+  <tr><td><code>isMentorOf</code></td><td>Asymmetric</td><td>A character who teaches or guides another.</td></tr>
+  <tr><td><code>isMarriedTo</code></td><td>Symmetric</td><td>Two characters united through marriage.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>
+narn:Turin    soc:killed             narn:Glaurung .
+narn:Beleg    soc:wasTheBestFriendOf narn:Turin .
+narn:Thingol  soc:wasTheKingOf       narn:Doriath .
+meo:morgoth   soc:isEnemyOf          narn:Hurin .
+narn:Glaurung soc:served             meo:morgoth .
+</pre>
+
+<hr>
+
+<h2>2. Places — <code>places.ttl</code></h2>
+<p>
+  This module defines types of locations and how they relate spatially. It imports <code>rcc.ttl</code> for the RCC8 topology relations. The main property is <code>isAPartOf</code>, which is transitive. If Menegroth is part of Doriath, and Doriath is part of Beleriand, the reasoner deduces that Menegroth is also part of Beleriand without being told explicitly.
+</p>
+
+<h3>Class Hierarchy</h3>
+<pre>
+Place
+  - Settlement
+      - City
+      - Village
+  - WildArea
+      - Forest
+      - Desert
+      - Hill
+      - Valley
+  - Region
+  - Realm
+  - Underground
+  - River
+</pre>
+
+<h3>Properties</h3>
+<table>
+  <tr><th>Property</th><th>Characteristics</th><th>Description</th></tr>
+  <tr><td><code>isAPartOf</code></td><td>Transitive</td><td>A place contained within a larger place. Inverse of <code>hasPart</code>.</td></tr>
+  <tr><td><code>hasPart</code></td><td>Transitive</td><td>A place that contains a smaller place. Inverse of <code>isAPartOf</code>.</td></tr>
+  <tr><td><code>isLocatedIn</code></td><td>Transitive</td><td>A place situated within another. Used for more general location facts.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>
+narn:Dor-lomin  a loc:Region ;
+    loc:isAPartOf narn:Hithlum .
+
+narn:Hithlum    a loc:Region ;
+    loc:isAPartOf narn:Beleriand .
+
+# Reasoner automatically deduces:
+# narn:Dor-lomin loc:isAPartOf narn:Beleriand
+
+narn:Menegroth  a loc:City ;
+    loc:isAPartOf narn:Doriath .
+
+narn:Brethil    a loc:Forest ;
+    loc:isAPartOf narn:Beleriand .
+</pre>
+
+<hr>
+
+<h2>3. Events — <code>events.ttl</code></h2>
+<p>
+  This is the main module. It defines types of events and how they relate to characters, places, and other events. The temporal relations are based on Allen's interval algebra, which covers all possible ways two time intervals can relate to each other. A separate property <code>precedes</code> is used in the instance file for direct sequential ordering.
+</p>
+
+<h3>Class Hierarchy</h3>
+<pre>
+Event
+  - Battle
+      - Siege
+  - Meeting
+  - Travel
+  - Birth
+  - Death
+  - Curse
+
+Instant (standalone, not a subclass of Event)
+</pre>
+
+<p><strong>Disjointness axioms:</strong> Birth and Death are disjoint. Battle and Meeting are disjoint.</p>
+<p><strong>Cardinality axiom:</strong> Every Event must have at least one <code>occurredAt</code> value.</p>
+
+<h3>Event Link Properties</h3>
+<table>
+  <tr><th>Property</th><th>Domain</th><th>Range</th><th>Description</th></tr>
+  <tr><td><code>involvedCharacter</code></td><td>Event</td><td>—</td><td>A character who participates in the event.</td></tr>
+  <tr><td><code>occurredAt</code></td><td>Event</td><td>loc:Place</td><td>The place where the event happened. Required for every event.</td></tr>
+  <tr><td><code>performedBy</code></td><td>Event</td><td>—</td><td>The character who caused or triggered the event.</td></tr>
+  <tr><td><code>hasVictim</code></td><td>Event</td><td>—</td><td>The character who was the target of the event.</td></tr>
+  <tr><td><code>hasOutcome</code></td><td>Event</td><td>Event</td><td>Another event that directly follows as a result.</td></tr>
+  <tr><td><code>isPartOf</code></td><td>Event</td><td>Event</td><td>A sub-event of a larger event. Transitive.</td></tr>
+  <tr><td><code>hasPart</code></td><td>Event</td><td>Event</td><td>Inverse of isPartOf. Transitive.</td></tr>
+  <tr><td><code>begets</code></td><td>Birth</td><td>—</td><td>The character born in this birth event.</td></tr>
+  <tr><td><code>hasTraveller</code></td><td>Travel</td><td>—</td><td>The character who moves during a travel event.</td></tr>
+  <tr><td><code>hasYear</code></td><td>Event</td><td>xsd:integer</td><td>Data property. The year in the story timeline when the event occurred.</td></tr>
+</table>
+
+<h3>Allen's Temporal Relations</h3>
+<table>
+  <tr><th>Property</th><th>Inverse</th><th>Meaning</th></tr>
+  <tr><td><code>before</code></td><td><code>after</code></td><td>A ends completely before B starts. Gap between them. Transitive.</td></tr>
+  <tr><td><code>after</code></td><td><code>before</code></td><td>A starts after B has ended. Transitive. Inverse of before.</td></tr>
+  <tr><td><code>precedes</code></td><td><code>follows</code></td><td>General ordering: A ends before B starts. Transitive. Used in instance file.</td></tr>
+  <tr><td><code>follows</code></td><td><code>precedes</code></td><td>A starts after B has ended. Transitive. Inverse of precedes.</td></tr>
+  <tr><td><code>meets</code></td><td><code>metBy</code></td><td>A ends exactly when B starts. No gap.</td></tr>
+  <tr><td><code>overlaps</code></td><td><code>overlappedBy</code></td><td>A starts first, B starts before A ends. They share a period.</td></tr>
+  <tr><td><code>during</code></td><td><code>contains</code></td><td>A is entirely inside B. A starts after and ends before B.</td></tr>
+  <tr><td><code>starts</code></td><td><code>startedBy</code></td><td>A and B start at the same time. A ends first.</td></tr>
+  <tr><td><code>finishes</code></td><td><code>finishedBy</code></td><td>A and B end at the same time. B started first.</td></tr>
+  <tr><td><code>equalTime</code></td><td><code>equalTime</code></td><td>A and B start and end at the same time. Symmetric.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>
+narn:NirnaethArnoediad a evnt:Battle ;
+    evnt:occurredAt        narn:Anfauglith ;
+    evnt:involvedCharacter narn:Hurin, narn:Fingon ;
+    evnt:hasOutcome        narn:HurinCaptured ;
+    evnt:precedes          narn:HurinCaptured .
+
+# Death of Orodreth happened DURING the Fall of Nargothrond
+narn:DeathOfOrodreth a evnt:Death ;
+    evnt:occurredAt narn:Nargothrond ;
+    evnt:during     narn:FallOfNargothrond .
+</pre>
+
+<hr>
+
+<h2>4. Plot Structure — <code>plot.ttl</code></h2>
+<p>
+  This module describes the story from a narrative point of view, not from inside the story world. It defines acts, themes, the protagonist and antagonist, plot twists, and the opening and closing events.
+</p>
+
+<h3>Class Hierarchy</h3>
+<pre>
+Story
+NarrativeUnit
+  - Act
+  - Chapter
+  - Scene
+  - Climax
+  - Resolution
+  - Exposition
+PlotTwist
+Theme
+NarrativeRole
+  - ProtagonistRole
+  - AntagonistRole
+  - SupportingRole
+</pre>
+
+<p><strong>Disjointness axioms:</strong> Climax, Resolution, and Exposition are disjoint. ProtagonistRole and AntagonistRole are disjoint.</p>
+<p><strong>Cardinality axioms:</strong> Every Story must have at least one protagonist, one opening event, and one closing event.</p>
+
+<h3>Properties</h3>
+<table>
+  <tr><th>Property</th><th>Domain</th><th>Range</th><th>Description</th></tr>
+  <tr><td><code>hasProtagonist</code></td><td>Story</td><td>—</td><td>The main character. At least one required per story.</td></tr>
+  <tr><td><code>hasAntagonist</code></td><td>Story</td><td>—</td><td>The opposing force or character.</td></tr>
+  <tr><td><code>hasNarrator</code></td><td>Story</td><td>—</td><td>The entity through whose perspective the story is told.</td></tr>
+  <tr><td><code>hasTheme</code></td><td>Story</td><td>Theme</td><td>A central idea the story explores.</td></tr>
+  <tr><td><code>hasClimaxEvent</code></td><td>Story</td><td>evnt:Event</td><td>The event at the peak of narrative tension.</td></tr>
+  <tr><td><code>hasOpeningEvent</code></td><td>Story</td><td>evnt:Event</td><td>The event that starts the story. Required.</td></tr>
+  <tr><td><code>hasClosingEvent</code></td><td>Story</td><td>evnt:Event</td><td>The event that ends the story. Required.</td></tr>
+  <tr><td><code>hasPlotTwist</code></td><td>Story</td><td>PlotTwist</td><td>An unexpected development that changes the narrative direction.</td></tr>
+  <tr><td><code>hasNarrativeUnit</code></td><td>Story</td><td>NarrativeUnit</td><td>A structural unit such as an act or chapter.</td></tr>
+  <tr><td><code>nextUnit</code></td><td>NarrativeUnit</td><td>NarrativeUnit</td><td>The unit that follows this one. Asymmetric, Irreflexive. Inverse of previousUnit.</td></tr>
+  <tr><td><code>previousUnit</code></td><td>NarrativeUnit</td><td>NarrativeUnit</td><td>The unit that precedes this one. Asymmetric, Irreflexive. Inverse of nextUnit.</td></tr>
+  <tr><td><code>describesEvent</code></td><td>NarrativeUnit</td><td>evnt:Event</td><td>Links a narrative unit to the story event it covers.</td></tr>
+  <tr><td><code>hasNarrativeRole</code></td><td>—</td><td>NarrativeRole</td><td>The role a character plays in the narrative.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>
+narn:NarnIChInHurin a plot:Story ;
+    plot:hasProtagonist  narn:Turin ;
+    plot:hasAntagonist   meo:morgoth, narn:Glaurung ;
+    plot:hasOpeningEvent narn:TurinBirth ;
+    plot:hasClosingEvent narn:DeathOfTurin ;
+    plot:hasClimaxEvent  narn:TurinSlaysGlaurung ;
+    plot:hasTheme        narn:ThemeCurse, narn:ThemeFate ;
+    plot:hasPlotTwist    narn:TwistNienorIdentity .
+
+narn:ActI a plot:Exposition ;
+    plot:describesEvent narn:NirnaethArnoediad ;
+    plot:nextUnit       narn:ActII .
+</pre>
+
+<hr>
+
+<h2>5. Actions — <code>actions.ttl</code></h2>
+<p>
+  An event is something that happens. An action is something a character <em>does</em>. It has an agent who performs it, usually a patient who receives it, and sometimes an instrument. This allows the ontology to answer questions like what weapon was used, which a plain event cannot express.
+</p>
+
+<h3>Class Hierarchy</h3>
+<pre>
+Action
+  - IntentionalAction
+      - AttackAction
+      - CursingAction
+      - DeceivingAction
+  - AccidentalAction
+  - KillingAction
+  - TravelAction
+  - SpeechAction
+
+Instrument
+  - Weapon
+      - Sword
+  - MagicalArtifact
+</pre>
+
+<p><strong>Disjointness axioms:</strong> IntentionalAction and AccidentalAction are disjoint. Weapon and MagicalArtifact are disjoint.</p>
+<p><strong>Cardinality axioms:</strong> Every Action must have at least one agent. A KillingAction must have exactly one patient. An AttackAction must use at least one Weapon.</p>
+
+<h3>Properties</h3>
+<table>
+  <tr><th>Property</th><th>Domain</th><th>Range</th><th>Description</th></tr>
+  <tr><td><code>hasAgent</code></td><td>Action</td><td>—</td><td>The character who performs the action. Required.</td></tr>
+  <tr><td><code>hasPatient</code></td><td>Action</td><td>—</td><td>The character or entity that receives the action.</td></tr>
+  <tr><td><code>hasInstrument</code></td><td>Action</td><td>Instrument</td><td>The tool or weapon used to carry out the action.</td></tr>
+  <tr><td><code>hasResult</code></td><td>Action</td><td>evnt:Event</td><td>An event that results directly from this action.</td></tr>
+  <tr><td><code>hasGoal</code></td><td>IntentionalAction</td><td>—</td><td>The intended outcome. Only applies to intentional actions.</td></tr>
+  <tr><td><code>isPartOfEvent</code></td><td>Action</td><td>evnt:Event</td><td>The larger event this action belongs to.</td></tr>
+  <tr><td><code>performedAt</code></td><td>Action</td><td>loc:Place</td><td>The place where the action was carried out.</td></tr>
+  <tr><td><code>isIntentional</code></td><td>Action</td><td>xsd:boolean</td><td>Data property. True if deliberate, false if accidental.</td></tr>
+  <tr><td><code>precedes</code></td><td>Action</td><td>Action</td><td>This action is performed before another action. Transitive. Inverse of follows.</td></tr>
+  <tr><td><code>follows</code></td><td>Action</td><td>Action</td><td>This action is performed after another action. Transitive. Inverse of precedes.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>
+# Turin kills Glaurung using the sword Gurthang
+narn:TurinKillsGlaurung a act:KillingAction ;
+    act:hasAgent      narn:Turin ;
+    act:hasPatient    narn:Glaurung ;
+    act:hasInstrument narn:Gurthang ;
+    act:performedAt   narn:Brethil ;
+    act:isIntentional "true"^^xsd:boolean .
+
+# Turin accidentally kills Beleg — same weapon, no intent
+narn:TurinKillsBeleg a act:KillingAction, act:AccidentalAction ;
+    act:hasAgent      narn:Turin ;
+    act:hasPatient    narn:Beleg ;
+    act:hasInstrument narn:Gurthang ;
+    act:isIntentional "false"^^xsd:boolean .
+</pre>
+
+<hr>
+
+<h2>Competency Questions</h2>
+<table>
+  <tr><th>Question</th><th>Answered by</th></tr>
+  <tr><td>Who is the parent, sibling, or spouse of character X?</td><td><code>fo.ttl</code>: isAParentOf, isASiblingOf, isMarriedTo</td></tr>
+  <tr><td>Where did character X travel during the story?</td><td><code>events.ttl</code>: Travel events with hasTraveller and occurredAt</td></tr>
+  <tr><td>Who was involved in event E?</td><td><code>events.ttl</code>: involvedCharacter</td></tr>
+  <tr><td>Did event E1 happen before event E2?</td><td><code>events.ttl</code>: precedes, before (Allen relations)</td></tr>
+  <tr><td>Where did event E occur?</td><td><code>events.ttl</code>: occurredAt</td></tr>
+  <tr><td>Can a character be in two places at the same time?</td><td>Demonstrated by querying events involving the same character at different locations via <code>evnt:occurredAt</code> combined with <code>rcc:dc</code> (disconnected) spatial relations from <code>rcc.ttl</code></td></tr>
+  <tr><td>What event ends story S?</td><td><code>plot.ttl</code>: hasClosingEvent</td></tr>
+  <tr><td>What item was used in action A?</td><td><code>actions.ttl</code>: hasInstrument on KillingAction</td></tr>
+</table>
+
+<hr>
+
+<h2>Design Decisions</h2>
+
+<p><strong>1. Separate modules for each concern.</strong>
+Social relations, places, events, narrative structure, and actions are each in their own file. This keeps the model organized and each module can be reused without pulling in the others.</p>
+
+<p><strong>2. Prefixes match the instructor's lab data.</strong>
+The social relations module uses <code>soc: &lt;https://purl.org/social/relations/&gt;</code> and places use <code>loc: &lt;https://purl.org/location/&gt;</code>, matching the example <code>narn.ttl</code> file from the lab sessions. This ensures the instance file works directly with the provided data.</p>
+
+<p><strong>3. Allen's algebra for temporal relations.</strong>
+Events do not always happen one after the other. The Fall of Nargothrond and the death of Orodreth overlap, one happens during the other. Allen's 13 interval relations cover all such cases and allow more precise temporal reasoning than a plain before/after property.</p>
+
+<p><strong>4. Actions are separate from events.</strong>
+An event records that something happened. An action records that a character did something, with intent, a target, and a tool. Turin accidentally kills Beleg and this is a KillingAction marked with <code>isIntentional false</code>, which an event alone cannot capture.</p>
+
+<p><strong>5. Rich axioms over large coverage.</strong>
+The ontology uses relatively few classes but adds meaningful constraints: cardinality restrictions, disjointness axioms, inverse properties, and transitive properties. These allow the reasoner to detect inconsistencies and make deductions automatically.</p>
+
+<p><strong>6. owl:sameAs for character aliases.</strong>
+Turin has many names in the story: Neithan, Gorthol, Mormegil, Turambar. These are linked with <code>owl:sameAs</code> in the instance file, following the same approach used for Nienor and Niniel in the instructor's example data.</p>
+
+<hr>
+
+<h2>Instance File — <code>instances.ttl</code></h2>
+<p>
+  The file <code>instances.ttl</code> uses the prefix <code>narn: &lt;https://purl.org/narn/&gt;</code> and imports all modules. It contains concrete examples from the Narn story that instantiate every class and property defined in the ontology.
+</p>
+<p>It includes:</p>
+<ul>
+  <li>17 characters: Hurin, Morwen, Huor, Rian, Turin, Nienor, Lalaith, Tuor, Beleg, Thingol, Orodreth, Finduilas, Sador, Brandir, Saeros, Fingon, Glaurung, typed using <code>meo:</code> and <code>fo:</code> classes</li>
+  <li>14 places: Arda, Endor, Beleriand, Hithlum, Dor-lomin, Doriath, Menegroth, Nargothrond, Brethil, AmonRudh, Anfauglith, Angband, Gondolin, Cabed-en-Aras, nested using <code>loc:isAPartOf</code></li>
+  <li>13 events: in temporal order using <code>evnt:precedes</code>, with one <code>evnt:during</code> relation for the death of Orodreth</li>
+  <li>5 actions: MorgothCursesHurin, TurinKillsGlaurung, TurinSuicide, GlaurungDeceivesNienor, TurinKillsBeleg (accidental). One instrument: Gurthang (Sword)</li>
+  <li>1 story (NarnIChInHurin) with 3 acts (ActI as Exposition, ActII as Act, ActIII as Climax), 3 themes (Curse, Fate, Pride), and 1 plot twist (TwistNienorIdentity)</li>
+</ul>
+<p>
+  Nienor and Niniel are linked using <code>owl:sameAs</code> since Niniel is the name Turin gave her after her memory was taken.
+</p>
+
+<hr>
+
+<h2>Use of AI Tools</h2>
+<p>
+  I used Claude to figure out how to write OWL syntax correctly. It also helped me set up Allen's temporal algebra so the event sequences made sense. I also used it to build the plot and action modules because I was not sure how to structure things like intentional versus accidental actions or narrative units. Once the logic was ready, I ran everything through the HermiT reasoner in Protege to make sure the files were consistent.
+</p>
+
+<hr>
+
+<p class="meta">
+  Project repository: <a href="https://github.com/muhammadawais92/Knowledge_Represenation_Homework" target="_blank">github.com/muhammadawais92/Knowledge_Represenation_Homework</a>
+</p>
+
+</body>
+</html>
