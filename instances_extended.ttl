@@ -1,0 +1,831 @@
+@prefix narn: <https://purl.org/narn/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix fo: <http://purl.org/family/> .
+@prefix meo: <http://purl.org/meo/> .
+@prefix soc: <https://purl.org/social/relations/> .
+@prefix loc: <https://purl.org/location/> .
+@prefix rcc: <https://purl.org/region/rcc8/> .
+@prefix evnt: <https://purl.org/event/> .
+@prefix plot: <https://purl.org/plot/> .
+@prefix act: <https://purl.org/action/> .
+@base <https://purl.org/narn/> .
+
+<https://purl.org/narn/> rdf:type owl:Ontology ;
+    owl:imports <http://purl.org/family/> ;
+    owl:imports <http://purl.org/meo/> ;
+    owl:imports <https://purl.org/social/relations/> ;
+    owl:imports <https://purl.org/location/> ;
+    owl:imports <https://purl.org/event/> ;
+    owl:imports <https://purl.org/plot/> ;
+    owl:imports <https://purl.org/action/> ;
+    rdfs:label "Narn i Chin Hurin - Instance Data"@en ;
+    rdfs:comment "Concrete instances from the Tale of the Children of Hurin, illustrating all ontology modules. Extended to cover all classes and properties defined in the knowledge model."@en .
+
+
+#################################################################
+#    CHARACTERS
+#################################################################
+
+# --- Ainur (Valar and Maiar) ---
+
+meo:manwe a meo:Vala, fo:Male ;
+    rdfs:label "Manwe"@qya ;
+    skos:altLabel "King of the Valar"@en, "Elder King"@en ;
+    rdfs:comment "The King of the Valar and lord of Arda."@en ;
+    soc:isEnemyOf meo:morgoth ;
+    soc:isLordOf meo:ulmo .
+
+meo:ulmo a meo:Vala, fo:Male ;
+    rdfs:label "Ulmo"@qya ;
+    skos:altLabel "Lord of Waters"@en ;
+    rdfs:comment "The Vala who rules all water and aided the peoples of Beleriand."@en ;
+    soc:isAllyOf narn:Tuor .
+
+meo:sauron a meo:Maia, fo:Male ;
+    rdfs:label "Sauron"@qya ;
+    skos:altLabel "Gorthaur"@sjn, "The Abhorred"@en ;
+    rdfs:comment "The most powerful of Morgoth's servants, a Maia who became evil."@en ;
+    soc:served meo:morgoth ;
+    soc:isEnemyOf narn:Hurin .
+
+# --- Elves ---
+
+narn:Hurin a meo:Adan, fo:Male ;
+    rdfs:label "Hurin"@sjn ;
+    skos:altLabel "Hurin Thalion"@sjn, "Steadfast"@en ;
+    fo:isMarriedTo narn:Morwen ;
+    fo:isABrotherOf narn:Huor ;
+    fo:isAParentOf narn:Turin, narn:Nienor, narn:Lalaith ;
+    fo:isTheFatherOf narn:Turin, narn:Nienor, narn:Lalaith ;
+    soc:loved narn:Morwen ;
+    soc:livedIn narn:Dor-lomin, narn:Angband ;
+    soc:isAllyOf narn:Fingon ;
+    soc:isEnemyOf meo:morgoth ;
+    soc:isLordOf narn:Sador ;
+    plot:hasNarrativeRole narn:RoleHurin .
+
+narn:Morwen a meo:Adan, fo:Female ;
+    rdfs:label "Morwen"@sjn ;
+    skos:altLabel "Eledhwen"@sjn, "Elven-fair"@en ;
+    fo:isMarriedTo narn:Hurin ;
+    fo:isASisterOf narn:Rian ;
+    fo:isAParentOf narn:Turin, narn:Nienor, narn:Lalaith ;
+    fo:isTheMotherOf narn:Turin, narn:Nienor, narn:Lalaith ;
+    soc:loved narn:Hurin ;
+    soc:livedIn narn:Dor-lomin, narn:Doriath .
+
+narn:Huor a meo:Adan, fo:Male ;
+    rdfs:label "Huor"@sjn ;
+    fo:isMarriedTo narn:Rian ;
+    fo:isAParentOf narn:Tuor ;
+    fo:isTheFatherOf narn:Tuor ;
+    fo:isABrotherOf narn:Hurin ;
+    fo:isASiblingOf narn:Hurin ;
+    soc:isAllyOf narn:Hurin .
+
+narn:Rian a meo:Adan, fo:Female ;
+    rdfs:label "Rian"@sjn ;
+    fo:isMarriedTo narn:Huor ;
+    fo:isAParentOf narn:Tuor ;
+    fo:isTheMotherOf narn:Tuor ;
+    fo:isASisterOf narn:Morwen ;
+    fo:isASiblingOf narn:Morwen .
+
+narn:Turin a meo:Adan, fo:Male ;
+    rdfs:label "Turin"@en ;
+    skos:altLabel "Neithan"@sjn, "Gorthol"@sjn, "Agarwaen"@sjn,
+                  "Mormegil"@sjn, "Turambar"@qya, "Dagnir Glaurunga"@qya ;
+    fo:isASonOf narn:Hurin, narn:Morwen ;
+    fo:isAChildOf narn:Hurin, narn:Morwen ;
+    fo:isADescendentOf narn:Hurin, narn:Morwen ;
+    fo:isABrotherOf narn:Nienor ;
+    fo:isASiblingOf narn:Nienor, narn:Lalaith ;
+    soc:hasFriend narn:Beleg ;
+    soc:killed narn:Glaurung, narn:Brandir ;
+    soc:livedIn narn:Dor-lomin, narn:Doriath, narn:AmonRudh,
+               narn:Nargothrond, narn:Brethil ;
+    soc:isEnemyOf meo:morgoth, narn:Glaurung ;
+    soc:loved narn:Niniel ;
+    plot:hasNarrativeRole narn:RoleTurinProtagonist .
+
+narn:Nienor a meo:Adan, fo:Female ;
+    rdfs:label "Nienor"@sjn ;
+    skos:altLabel "Niniel"@sjn, "Tear-maiden"@en ;
+    fo:isADaughterOf narn:Hurin, narn:Morwen ;
+    fo:isAChildOf narn:Hurin, narn:Morwen ;
+    fo:isADescendentOf narn:Hurin, narn:Morwen ;
+    fo:isASisterOf narn:Turin ;
+    fo:isASiblingOf narn:Turin, narn:Lalaith ;
+    soc:livedIn narn:Dor-lomin, narn:Doriath, narn:Brethil .
+
+narn:Niniel owl:sameAs narn:Nienor .
+
+narn:Lalaith a meo:Adan, fo:Female ;
+    rdfs:label "Urwen"@sjn ;
+    skos:altLabel "Lalaith"@sjn, "Laughter"@en ;
+    fo:isADaughterOf narn:Hurin, narn:Morwen ;
+    fo:isAChildOf narn:Hurin, narn:Morwen ;
+    fo:isASiblingOf narn:Turin, narn:Nienor ;
+    soc:livedIn narn:Dor-lomin .
+
+narn:Tuor a meo:Adan, fo:Male ;
+    rdfs:label "Tuor"@sjn ;
+    fo:isASonOf narn:Huor, narn:Rian ;
+    fo:isAChildOf narn:Huor, narn:Rian ;
+    fo:isADescendentOf narn:Huor, narn:Rian ;
+    soc:livedIn narn:Gondolin .
+
+# Earendil is the half-elven son of Tuor (Man) and Idril (Elf) — illustrates meo:Peredhel
+narn:Idril a meo:Elda, fo:Female ;
+    rdfs:label "Idril"@sjn ;
+    skos:altLabel "Celebrindal"@sjn, "Silverfoot"@en ;
+    fo:isMarriedTo narn:Tuor ;
+    soc:livedIn narn:Gondolin .
+
+narn:Earendil a meo:Peredhel, fo:Male ;
+    rdfs:label "Earendil"@qya ;
+    skos:altLabel "Half-elven"@en, "The Blessed"@en ;
+    rdfs:comment "Son of Tuor (Man) and Idril (Elf), thus a Half-elf (Peredhel). Cousin of Turin through the line of Huor."@en ;
+    fo:isASonOf narn:Tuor, narn:Idril ;
+    fo:isAChildOf narn:Tuor, narn:Idril ;
+    fo:isADescendentOf narn:Tuor, narn:Idril ;
+    fo:isACousinOf narn:Turin .
+
+narn:Beleg a meo:Elda, fo:Male ;
+    rdfs:label "Beleg"@sjn ;
+    skos:altLabel "Cuthalion"@sjn, "Strongbow"@en ;
+    soc:wasTheBestFriendOf narn:Turin ;
+    soc:served narn:Thingol ;
+    soc:isServantOf narn:Thingol ;
+    soc:isAllyOf narn:Turin ;
+    plot:hasNarrativeRole narn:RoleBelegSupporting .
+
+narn:Thingol a meo:Elda, fo:Male ;
+    rdfs:label "Thingol"@sjn ;
+    skos:altLabel "Elwe"@qya, "Grey-cloak"@en ;
+    soc:wasTheKingOf narn:Doriath ;
+    soc:isLordOf narn:Beleg, narn:Saeros ;
+    soc:livedIn narn:Menegroth ;
+    plot:hasNarrativeRole narn:RoleThingolSupporting .
+
+narn:Orodreth a meo:Elda, fo:Male ;
+    rdfs:label "Orodreth"@sjn ;
+    soc:wasTheKingOf narn:Nargothrond ;
+    soc:isLordOf narn:Finduilas ;
+    soc:livedIn narn:Nargothrond .
+
+narn:Finduilas a meo:Elda, fo:Female ;
+    rdfs:label "Finduilas"@sjn ;
+    fo:isADaughterOf narn:Orodreth ;
+    fo:isAChildOf narn:Orodreth ;
+    soc:loved narn:Turin ;
+    soc:livedIn narn:Nargothrond .
+
+narn:Sador a meo:Adan, fo:Male ;
+    rdfs:label "Sador"@sjn ;
+    skos:altLabel "Labadal"@sjn, "Hopafoot"@en ;
+    soc:served narn:Hurin ;
+    soc:isServantOf narn:Hurin ;
+    soc:hasFriend narn:Turin .
+
+narn:Brandir a meo:Atan, fo:Male ;
+    rdfs:label "Brandir"@sjn ;
+    soc:loved narn:Niniel ;
+    soc:livedIn narn:Brethil .
+
+narn:Saeros a meo:Elda, fo:Male ;
+    rdfs:label "Saeros"@sjn ;
+    soc:hated narn:Turin ;
+    soc:served narn:Thingol ;
+    soc:isServantOf narn:Thingol .
+
+narn:Fingon a meo:Elda, fo:Male ;
+    rdfs:label "Fingon"@sjn ;
+    soc:isAllyOf narn:Hurin .
+
+# Mim the Dwarf: illustrates meo:Casar
+narn:Mim a meo:Casar, fo:Male ;
+    rdfs:label "Mim"@sjn ;
+    skos:altLabel "Mim the Petty-dwarf"@en ;
+    rdfs:comment "A Petty-dwarf (Casar) who owned the halls of Amon Rudh and betrayed Turin to Morgoth's servants."@en ;
+    soc:livedIn narn:AmonRudh ;
+    soc:isEnemyOf narn:Turin .
+
+# Gothmog: illustrates meo:Maia (evil Maia, balrog)
+narn:Gothmog a meo:Maia, meo:EvilBeing, fo:Male ;
+    rdfs:label "Gothmog"@sjn ;
+    skos:altLabel "Lord of Balrogs"@en ;
+    rdfs:comment "A Maia who became an evil Balrog, High Captain of Angband, who slew Fingon at the Nirnaeth Arnoediad."@en ;
+    soc:served meo:morgoth ;
+    soc:killed narn:Fingon .
+
+# Morgoth
+meo:morgoth soc:isEnemyOf narn:Hurin, narn:Turin ;
+            soc:wasTheKingOf narn:Angband ;
+            soc:isLordOf meo:sauron, narn:Glaurung, narn:Gothmog .
+
+narn:Glaurung a meo:Lócë ;
+    rdfs:label "Glaurung"@sjn ;
+    soc:served meo:morgoth ;
+    soc:isServantOf meo:morgoth ;
+    soc:isEnemyOf narn:Turin, narn:Hurin .
+
+# Illustrate social role classes
+narn:RoleTurinProtagonist a plot:ProtagonistRole ;
+    rdfs:label "Turin as protagonist"@en .
+
+narn:RoleHurin a plot:SupportingRole ;
+    rdfs:label "Hurin as supporting character"@en .
+
+narn:RoleBelegSupporting a plot:SupportingRole ;
+    rdfs:label "Beleg as supporting character"@en .
+
+narn:RoleThingolSupporting a plot:SupportingRole ;
+    rdfs:label "Thingol as supporting character"@en .
+
+narn:RoleMorgothAntagonist a plot:AntagonistRole ;
+    rdfs:label "Morgoth as antagonist"@en .
+
+# Social role class instances
+narn:KingRole a soc:Leader ;
+    rdfs:label "King role"@en ;
+    rdfs:comment "The social role of a king who commands others."@en .
+
+narn:BelegServantRole a soc:Servant ;
+    rdfs:label "Beleg's servant role"@en ;
+    rdfs:comment "Beleg's role as a loyal servant and warrior of King Thingol."@en .
+
+narn:TurinAllyRole a soc:Ally ;
+    rdfs:label "Turin as ally"@en ;
+    rdfs:comment "Turin's role as an ally of the Elves against Morgoth."@en .
+
+narn:MorgothEnemyRole a soc:Enemy ;
+    rdfs:label "Morgoth as enemy"@en ;
+    rdfs:comment "Morgoth's role as the enemy of all free peoples."@en .
+
+
+#################################################################
+#    INSTRUMENTS
+#################################################################
+
+narn:Gurthang a act:Sword ;
+    rdfs:label "Gurthang"@sjn ;
+    skos:altLabel "Iron of Death"@en, "Anglachel"@sjn ;
+    rdfs:comment "The enchanted black sword of Turin, forged from a meteorite. It spoke and agreed to slay its master at his request."@en .
+
+narn:Dailir a act:Weapon ;
+    rdfs:label "Dailir"@sjn ;
+    rdfs:comment "The bow of Beleg Cuthalion, the greatest archer of the Elves, used at Amon Rudh."@en .
+
+narn:Nauglamir a act:MagicalArtifact ;
+    rdfs:label "Nauglamir"@sjn ;
+    skos:altLabel "Dwarf-necklace"@en ;
+    rdfs:comment "A magical necklace of great craftsmanship, crafted by the Dwarves. Later set with the Silmaril by Thingol, leading to his death."@en .
+
+
+#################################################################
+#    PLACES
+#################################################################
+
+narn:Arda a loc:Place ;
+    rdfs:label "Arda"@qya ;
+    skos:altLabel "The World"@en .
+
+narn:Endor a loc:Place ;
+    rdfs:label "Endor"@qya ;
+    skos:altLabel "Middle-earth"@en ;
+    loc:isAPartOf narn:Arda ;
+    rcc:ntpp narn:Arda .
+
+narn:Beleriand a loc:Region ;
+    rdfs:label "Beleriand"@sjn ;
+    loc:isAPartOf narn:Endor ;
+    loc:hasPart narn:Hithlum, narn:Doriath, narn:Brethil, narn:Nargothrond,
+               narn:AmonRudh, narn:Anfauglith, narn:Angband, narn:Gondolin ;
+    rcc:ntpp narn:Endor .
+
+narn:Hithlum a loc:Region ;
+    rdfs:label "Hithlum"@sjn ;
+    loc:isAPartOf narn:Beleriand ;
+    loc:hasPart narn:Dor-lomin ;
+    rcc:ntpp narn:Beleriand .
+
+narn:Dor-lomin a loc:Region ;
+    rdfs:label "Dor-lomin"@sjn ;
+    loc:isAPartOf narn:Hithlum ;
+    loc:isLocatedIn narn:Beleriand ;
+    rcc:ntpp narn:Hithlum .
+
+narn:Doriath a loc:Realm ;
+    rdfs:label "Doriath"@sjn ;
+    loc:isAPartOf narn:Beleriand ;
+    loc:hasPart narn:Menegroth, narn:Aelin-uial ;
+    rcc:ntpp narn:Beleriand ;
+    rcc:dc narn:Hithlum .
+
+narn:Menegroth a loc:City ;
+    rdfs:label "Menegroth"@sjn ;
+    skos:altLabel "The Thousand Caves"@en ;
+    rdfs:comment "An underground city built beneath the forest of Doriath — the seat of Thingol's power."@en ;
+    loc:isAPartOf narn:Doriath ;
+    loc:isLocatedIn narn:Doriath ;
+    rcc:ntpp narn:Doriath .
+
+narn:Aelin-uial a loc:Place ;
+    rdfs:label "Aelin-uial"@sjn ;
+    skos:altLabel "Meres of Twilight"@en ;
+    rdfs:comment "The twilight meres at the southern edge of Doriath where the river Sirion flows."@en ;
+    loc:isAPartOf narn:Doriath .
+
+narn:Sirion a loc:River ;
+    rdfs:label "Sirion"@sjn ;
+    rdfs:comment "The great river of Beleriand, flowing south through Doriath and forming a natural boundary."@en ;
+    loc:isLocatedIn narn:Beleriand ;
+    rcc:ec narn:Doriath .
+
+narn:Nargothrond a loc:City ;
+    rdfs:label "Nargothrond"@sjn ;
+    rdfs:comment "A great underground fortress-city built by Finrod Felagund on the banks of the river Narog."@en ;
+    loc:isAPartOf narn:Beleriand ;
+    loc:isLocatedIn narn:Beleriand ;
+    rcc:ntpp narn:Beleriand ;
+    rcc:dc narn:Doriath .
+
+narn:Brethil a loc:Forest ;
+    rdfs:label "Brethil"@sjn ;
+    loc:isAPartOf narn:Beleriand ;
+    rcc:ntpp narn:Beleriand ;
+    rcc:ec narn:Doriath .
+
+narn:AmonRudh a loc:Hill ;
+    rdfs:label "Amon Rudh"@sjn ;
+    skos:altLabel "Bald Hill"@en ;
+    loc:isAPartOf narn:Beleriand ;
+    rcc:ntpp narn:Beleriand .
+
+narn:Anfauglith a loc:Desert ;
+    rdfs:label "Anfauglith"@sjn ;
+    skos:altLabel "Gasping Dust"@en ;
+    loc:isAPartOf narn:Beleriand ;
+    rcc:ec narn:Hithlum .
+
+narn:Angband a loc:Place ;
+    rdfs:label "Angband"@sjn ;
+    skos:altLabel "Iron Prison"@en ;
+    rdfs:comment "The underground fortress of Morgoth, beneath Thangorodrim in the far north of Beleriand."@en ;
+    loc:isAPartOf narn:Beleriand ;
+    rcc:dc narn:Doriath ;
+    rcc:dc narn:Nargothrond .
+
+narn:Gondolin a loc:City ;
+    rdfs:label "Gondolin"@sjn ;
+    skos:altLabel "Hidden Rock"@en ;
+    rdfs:comment "The secret hidden city of Turgon, concealed in a mountain-encircled valley."@en ;
+    loc:isAPartOf narn:Beleriand ;
+    loc:isLocatedIn narn:Beleriand ;
+    rcc:ntpp narn:Beleriand ;
+    rcc:dc narn:Angband .
+
+narn:Cabed-en-Aras a loc:Place ;
+    rdfs:label "Cabed-en-Aras"@sjn ;
+    skos:altLabel "Deer's Leap"@en ;
+    rdfs:comment "A deep gorge in the forest of Brethil where the river Taeglin flows through a narrow ravine."@en ;
+    loc:isAPartOf narn:Brethil ;
+    loc:isLocatedIn narn:Brethil ;
+    rcc:ntpp narn:Brethil .
+
+narn:Ephel-Brandir a loc:Village ;
+    rdfs:label "Ephel Brandir"@sjn ;
+    skos:altLabel "The Encirclement of Brandir"@en ;
+    rdfs:comment "The settlement of the Men of Brethil, built on Amon Obel in the forest of Brethil."@en ;
+    loc:isAPartOf narn:Brethil ;
+    loc:isLocatedIn narn:Brethil ;
+    rcc:ntpp narn:Brethil .
+
+narn:HallsOfAngband a loc:Underground ;
+    rdfs:label "Halls of Angband"@sjn ;
+    rdfs:comment "The underground dungeons and halls of Morgoth's fortress, where prisoners were held and evil creatures bred."@en ;
+    loc:isAPartOf narn:Angband ;
+    rcc:ntpp narn:Angband .
+
+# Illustrate rcc:po (partial overlap) — Beleriand and Hithlum overlap (Hithlum is part of Beleriand but they share a border region)
+# Illustrate rcc:tpp and rcc:tppi
+narn:Beleriand rcc:tppi narn:Doriath .   # Beleriand (tangentially) properly contains Doriath
+narn:Doriath rcc:tpp narn:Beleriand .    # Doriath is a tangential proper part of Beleriand
+narn:Brethil rcc:ec narn:AmonRudh .      # Brethil and Amon Rudh touch at their edges
+narn:Nargothrond rcc:ec narn:Brethil .   # Nargothrond's region is externally connected to Brethil
+
+
+#################################################################
+#    EVENTS
+#################################################################
+
+narn:TurinBirth a evnt:Birth ;
+    rdfs:label "Birth of Turin"@en ;
+    evnt:begets narn:Turin ;
+    evnt:occurredAt narn:Dor-lomin ;
+    evnt:performedBy narn:Morwen ;
+    evnt:involvedCharacter narn:Hurin, narn:Morwen ;
+    evnt:precedes narn:LalaithBirth ;
+    evnt:hasYear 464 .
+
+narn:LalaithBirth a evnt:Birth ;
+    rdfs:label "Birth of Lalaith"@en ;
+    evnt:begets narn:Lalaith ;
+    evnt:occurredAt narn:Dor-lomin ;
+    evnt:performedBy narn:Morwen ;
+    evnt:precedes narn:LalaithDeath ;
+    evnt:hasYear 466 .
+
+narn:LalaithDeath a evnt:Death ;
+    rdfs:label "Death of Lalaith"@en ;
+    rdfs:comment "Lalaith died as a young child, carried off by a plague sent by Morgoth."@en ;
+    evnt:occurredAt narn:Dor-lomin ;
+    evnt:hasVictim narn:Lalaith ;
+    evnt:involvedCharacter narn:Lalaith ;
+    evnt:precedes narn:NirnaethArnoediad ;
+    evnt:hasYear 469 .
+
+narn:MeetingOfTurinAndBeleg a evnt:Meeting ;
+    rdfs:label "Meeting of Turin and Beleg in Doriath"@en ;
+    rdfs:comment "Turin's first meeting with Beleg Cuthalion in the halls of Doriath, beginning their great friendship."@en ;
+    evnt:occurredAt narn:Doriath ;
+    evnt:involvedCharacter narn:Turin, narn:Beleg ;
+    evnt:follows narn:TurinGoesToDoriath ;
+    evnt:precedes narn:TurinExiled ;
+    evnt:hasYear 472 .
+
+narn:NirnaethArnoediad a evnt:Battle ;
+    rdfs:label "Nirnaeth Arnoediad"@sjn ;
+    skos:altLabel "Battle of Unnumbered Tears"@en ;
+    evnt:occurredAt narn:Anfauglith ;
+    evnt:performedBy narn:Fingon ;
+    evnt:involvedCharacter narn:Hurin, narn:Huor, narn:Fingon, meo:morgoth, narn:Gothmog ;
+    evnt:hasOutcome narn:HurinCaptured ;
+    evnt:hasOutcome narn:DeathOfFingon ;
+    evnt:precedes narn:HurinCaptured ;
+    evnt:hasYear 472 ;
+    evnt:hasPart narn:DeathOfFingon .
+
+narn:DeathOfFingon a evnt:Death ;
+    rdfs:label "Death of Fingon"@en ;
+    rdfs:comment "Fingon, High King of the Noldor, was slain by Gothmog, the Lord of Balrogs, at the Nirnaeth Arnoediad."@en ;
+    evnt:occurredAt narn:Anfauglith ;
+    evnt:hasVictim narn:Fingon ;
+    evnt:involvedCharacter narn:Fingon, narn:Gothmog ;
+    evnt:during narn:NirnaethArnoediad ;
+    evnt:isPartOf narn:NirnaethArnoediad .
+
+narn:HurinCaptured a evnt:Curse ;
+    rdfs:label "Hurin captured and cursed by Morgoth"@en ;
+    evnt:occurredAt narn:Angband ;
+    evnt:involvedCharacter narn:Hurin, meo:morgoth ;
+    evnt:precedes narn:NienorBirth ;
+    evnt:hasYear 472 .
+
+narn:NienorBirth a evnt:Birth ;
+    rdfs:label "Birth of Nienor"@en ;
+    evnt:begets narn:Nienor ;
+    evnt:occurredAt narn:Dor-lomin ;
+    evnt:performedBy narn:Morwen ;
+    evnt:precedes narn:TurinGoesToDoriath ;
+    evnt:hasYear 473 .
+
+narn:TurinGoesToDoriath a evnt:Travel ;
+    rdfs:label "Turin travels from Dor-lomin to Doriath"@en ;
+    evnt:occurredAt narn:Doriath ;
+    evnt:hasTraveller narn:Turin ;
+    evnt:precedes narn:TurinExiled ;
+    evnt:hasYear 484 .
+
+narn:TurinExiled a evnt:Meeting ;
+    rdfs:label "Turin exiled from Doriath"@en ;
+    evnt:occurredAt narn:Doriath ;
+    evnt:involvedCharacter narn:Turin, narn:Thingol ;
+    evnt:precedes narn:TurinGoesToAmonRudh ;
+    evnt:precedes narn:FallOfNargothrond ;
+    evnt:hasYear 487 .
+
+narn:TurinGoesToAmonRudh a evnt:Travel ;
+    rdfs:label "Turin travels to Amon Rudh"@en ;
+    rdfs:comment "After exile, Turin wanders and eventually takes refuge in Mim's halls on Amon Rudh."@en ;
+    evnt:occurredAt narn:AmonRudh ;
+    evnt:hasTraveller narn:Turin ;
+    evnt:involvedCharacter narn:Mim ;
+    evnt:follows narn:TurinExiled ;
+    evnt:precedes narn:TurinGoesToNargothrond ;
+    evnt:hasYear 488 .
+
+narn:TurinGoesToNargothrond a evnt:Travel ;
+    rdfs:label "Turin travels to Nargothrond"@en ;
+    evnt:occurredAt narn:Nargothrond ;
+    evnt:hasTraveller narn:Turin ;
+    evnt:follows narn:TurinGoesToAmonRudh ;
+    evnt:precedes narn:FallOfNargothrond ;
+    evnt:hasYear 490 .
+
+narn:SiegeOfNargothrond a evnt:Siege ;
+    rdfs:label "Siege of Nargothrond"@en ;
+    rdfs:comment "Glaurung led Morgoth's forces to besiege and destroy Nargothrond, the great underground city of the Elves."@en ;
+    evnt:occurredAt narn:Nargothrond ;
+    evnt:involvedCharacter narn:Glaurung, narn:Turin, narn:Orodreth ;
+    evnt:isPartOf narn:FallOfNargothrond ;
+    evnt:hasYear 496 .
+
+narn:FallOfNargothrond a evnt:Battle ;
+    rdfs:label "Fall of Nargothrond"@en ;
+    evnt:occurredAt narn:Nargothrond ;
+    evnt:performedBy narn:Glaurung ;
+    evnt:involvedCharacter narn:Turin, narn:Glaurung, narn:Orodreth ;
+    evnt:hasVictim narn:Orodreth ;
+    evnt:hasOutcome narn:DeathOfOrodreth ;
+    evnt:precedes narn:TurinGoesToBrethil ;
+    evnt:hasPart narn:SiegeOfNargothrond ;
+    evnt:hasYear 496 .
+
+narn:DeathOfOrodreth a evnt:Death ;
+    rdfs:label "Death of Orodreth"@en ;
+    evnt:occurredAt narn:Nargothrond ;
+    evnt:hasVictim narn:Orodreth ;
+    evnt:involvedCharacter narn:Orodreth ;
+    evnt:during narn:FallOfNargothrond ;
+    evnt:isPartOf narn:FallOfNargothrond .
+
+narn:GlaurungCursesNienor a evnt:Curse ;
+    rdfs:label "Glaurung curses Nienor with amnesia"@en ;
+    rdfs:comment "At the ruins of Nargothrond, Glaurung ensnared Nienor with his gaze, stripping her of her memory and identity."@en ;
+    evnt:occurredAt narn:Nargothrond ;
+    evnt:performedBy narn:Glaurung ;
+    evnt:hasVictim narn:Nienor ;
+    evnt:involvedCharacter narn:Glaurung, narn:Nienor ;
+    evnt:follows narn:FallOfNargothrond ;
+    evnt:precedes narn:TurinGoesToBrethil ;
+    evnt:hasYear 496 .
+
+narn:TurinGoesToBrethil a evnt:Travel ;
+    rdfs:label "Turin travels to Brethil"@en ;
+    evnt:occurredAt narn:Brethil ;
+    evnt:hasTraveller narn:Turin ;
+    evnt:precedes narn:TurinSlaysGlaurung ;
+    evnt:hasYear 499 .
+
+# Illustrate Allen relations beyond precedes/follows
+narn:GlaurungCursesNienor evnt:meets narn:TurinGoesToBrethil .   # one ends when the other begins
+narn:TurinGoesToBrethil evnt:metBy narn:GlaurungCursesNienor .
+narn:FallOfNargothrond evnt:overlaps narn:GlaurungCursesNienor . # starts before and overlaps
+narn:GlaurungCursesNienor evnt:overlappedBy narn:FallOfNargothrond .
+narn:SiegeOfNargothrond evnt:starts narn:FallOfNargothrond .     # same start, ends before
+narn:FallOfNargothrond evnt:startedBy narn:SiegeOfNargothrond .
+narn:DeathOfOrodreth evnt:finishes narn:FallOfNargothrond .      # same end time
+narn:FallOfNargothrond evnt:finishedBy narn:DeathOfOrodreth .
+narn:TurinBirth evnt:before narn:NirnaethArnoediad .             # strictly before with gap
+narn:NirnaethArnoediad evnt:after narn:TurinBirth .
+narn:TurinGoesToDoriath evnt:contains narn:MeetingOfTurinAndBeleg . # contains as sub-event
+narn:MeetingOfTurinAndBeleg evnt:during narn:TurinGoesToDoriath .
+
+narn:TurinSlaysGlaurung a evnt:Death ;
+    rdfs:label "Turin slays Glaurung"@en ;
+    evnt:occurredAt narn:Brethil ;
+    evnt:performedBy narn:Turin ;
+    evnt:hasVictim narn:Glaurung ;
+    evnt:involvedCharacter narn:Turin, narn:Glaurung ;
+    evnt:precedes narn:DeathOfNienor ;
+    evnt:hasYear 499 .
+
+narn:DeathOfNienor a evnt:Death ;
+    rdfs:label "Death of Nienor"@en ;
+    evnt:occurredAt narn:Cabed-en-Aras ;
+    evnt:hasVictim narn:Nienor ;
+    evnt:involvedCharacter narn:Nienor ;
+    evnt:precedes narn:DeathOfTurin ;
+    evnt:meets narn:DeathOfTurin ;
+    evnt:hasYear 499 .
+
+narn:DeathOfTurin a evnt:Death ;
+    rdfs:label "Death of Turin"@en ;
+    evnt:occurredAt narn:Brethil ;
+    evnt:hasVictim narn:Turin ;
+    evnt:involvedCharacter narn:Turin ;
+    evnt:follows narn:TurinSlaysGlaurung ;
+    evnt:metBy narn:DeathOfNienor ;
+    evnt:hasYear 499 .
+
+# Instant nodes: anchoring birth of Turin and death of Turin on the timeline
+narn:InstantTurinBirth a evnt:Instant ;
+    rdfs:label "Moment of Turin's birth (Year 464)"@en ;
+    evnt:hasYear 464 .
+
+narn:InstantTurinDeath a evnt:Instant ;
+    rdfs:label "Moment of Turin's death (Year 499)"@en ;
+    evnt:hasYear 499 .
+
+
+#################################################################
+#    ACTIONS
+#################################################################
+
+narn:MorgothCursesHurin a act:CursingAction ;
+    rdfs:label "Morgoth curses Hurin"@en ;
+    act:hasAgent meo:morgoth ;
+    act:hasPatient narn:Hurin ;
+    act:isPartOfEvent narn:HurinCaptured ;
+    act:hasResult narn:HurinCaptured ;
+    act:performedAt narn:Angband ;
+    act:isIntentional "true"^^xsd:boolean .
+
+narn:TurinKillsGlaurung a act:KillingAction ;
+    rdfs:label "Turin kills Glaurung"@en ;
+    act:hasAgent narn:Turin ;
+    act:hasPatient narn:Glaurung ;
+    act:hasInstrument narn:Gurthang ;
+    act:isPartOfEvent narn:TurinSlaysGlaurung ;
+    act:hasResult narn:TurinSlaysGlaurung ;
+    act:performedAt narn:Brethil ;
+    act:isIntentional "true"^^xsd:boolean .
+
+narn:TurinSuicide a act:KillingAction ;
+    rdfs:label "Turin commands Gurthang to slay him"@en ;
+    act:hasAgent narn:Turin ;
+    act:hasPatient narn:Turin ;
+    act:hasInstrument narn:Gurthang ;
+    act:isPartOfEvent narn:DeathOfTurin ;
+    act:performedAt narn:Brethil ;
+    act:isIntentional "true"^^xsd:boolean ;
+    act:follows narn:TurinKillsGlaurung .
+
+narn:GlaurungDeceivesNienor a act:DeceivingAction ;
+    rdfs:label "Glaurung removes Nienor's memory"@en ;
+    act:hasAgent narn:Glaurung ;
+    act:hasPatient narn:Nienor ;
+    act:hasGoal narn:GoalDestabiliseTurin ;
+    act:isPartOfEvent narn:GlaurungCursesNienor ;
+    act:hasResult narn:GlaurungCursesNienor ;
+    act:performedAt narn:Nargothrond ;
+    act:isIntentional "true"^^xsd:boolean .
+
+narn:TurinKillsBeleg a act:KillingAction, act:AccidentalAction ;
+    rdfs:label "Turin accidentally kills Beleg"@en ;
+    act:hasAgent narn:Turin ;
+    act:hasPatient narn:Beleg ;
+    act:hasInstrument narn:Gurthang ;
+    act:performedAt narn:AmonRudh ;
+    act:isIntentional "false"^^xsd:boolean .
+
+# AttackAction — Gothmog attacks Fingon
+narn:GothmogAttacksFingon a act:AttackAction ;
+    rdfs:label "Gothmog attacks and slays Fingon"@en ;
+    act:hasAgent narn:Gothmog ;
+    act:hasPatient narn:Fingon ;
+    act:isPartOfEvent narn:DeathOfFingon ;
+    act:hasResult narn:DeathOfFingon ;
+    act:performedAt narn:Anfauglith ;
+    act:isIntentional "true"^^xsd:boolean .
+
+# TravelAction
+narn:TurinTravelsToBrethilAction a act:TravelAction ;
+    rdfs:label "Turin's journey to Brethil"@en ;
+    act:hasAgent narn:Turin ;
+    act:isPartOfEvent narn:TurinGoesToBrethil ;
+    act:performedAt narn:Brethil ;
+    act:isIntentional "true"^^xsd:boolean .
+
+# SpeechAction — Glaurung's revelation to Nienor
+narn:GlaurungRevealsTruth a act:SpeechAction ;
+    rdfs:label "Glaurung reveals Nienor's true identity to her"@en ;
+    rdfs:comment "Using speech, Glaurung reveals to the amnesiac Nienor that her real name is Nienor, daughter of Hurin, and that Turambar (her husband) is her own brother Turin — causing her to throw herself into the ravine."@en ;
+    act:hasAgent narn:Glaurung ;
+    act:hasPatient narn:Nienor ;
+    act:isPartOfEvent narn:DeathOfNienor ;
+    act:performedAt narn:Cabed-en-Aras ;
+    act:isIntentional "true"^^xsd:boolean ;
+    act:precedes narn:TurinSuicide .
+
+# Goals
+narn:GoalDestabiliseTurin a owl:Thing ;
+    rdfs:label "Destabilise Turin through Nienor"@en ;
+    rdfs:comment "Glaurung's goal in deceiving Nienor was to cause Turin's downfall by fulfilling Morgoth's curse through him."@en .
+
+# Action ordering (precedes/follows on actions)
+narn:MorgothCursesHurin act:precedes narn:GlaurungDeceivesNienor .
+narn:GlaurungDeceivesNienor act:precedes narn:TurinKillsGlaurung .
+narn:TurinKillsGlaurung act:precedes narn:GlaurungRevealsTruth .
+narn:GlaurungRevealsTruth act:follows narn:TurinKillsGlaurung .
+
+
+#################################################################
+#    PLOT STRUCTURE
+#################################################################
+
+narn:NarnIChInHurin a plot:Story ;
+    rdfs:label "Narn i Chin Hurin"@sjn ;
+    skos:altLabel "Tale of the Children of Hurin"@en ;
+    rdfs:comment "The tragic tale of Hurin's children, cursed by Morgoth."@en ;
+    plot:hasProtagonist narn:Turin ;
+    plot:hasAntagonist meo:morgoth, narn:Glaurung ;
+    plot:hasNarrator narn:Gandalf ;
+    plot:hasTheme narn:ThemeCurse, narn:ThemeFate, narn:ThemePride ;
+    plot:hasOpeningEvent narn:TurinBirth ;
+    plot:hasClosingEvent narn:DeathOfTurin ;
+    plot:hasClimaxEvent narn:TurinSlaysGlaurung ;
+    plot:hasPlotTwist narn:TwistNienorIdentity ;
+    plot:hasNarrativeUnit narn:ActI, narn:ActII, narn:ActIII .
+
+narn:Gandalf a meo:Maia, fo:Male ;
+    rdfs:label "Gandalf"@en ;
+    skos:altLabel "Olorin"@qya, "Mithrandir"@sjn, "The Grey Pilgrim"@en ;
+    rdfs:comment "An Istari (wizard) who is in fact a Maia sent to Middle-earth. Used in the story as the wise narrator figure who recounts the tragedy of Turin."@en ;
+    soc:isEnemyOf meo:morgoth .
+
+narn:ThemeCurse a plot:Theme ;
+    rdfs:label "The Curse of Morgoth"@en ;
+    rdfs:comment "The theme of an inescapable curse that haunts an entire family."@en .
+
+narn:ThemeFate a plot:Theme ;
+    rdfs:label "Fate and Free Will"@en ;
+    rdfs:comment "Whether characters can escape their destiny or are doomed to fulfil it."@en .
+
+narn:ThemePride a plot:Theme ;
+    rdfs:label "Pride and Hubris"@en ;
+    rdfs:comment "How excessive pride leads to tragic consequences."@en .
+
+narn:TwistNienorIdentity a plot:PlotTwist ;
+    rdfs:label "Nienor revealed to be Turin's sister"@en ;
+    rdfs:comment "Glaurung reveals to Nienor that she is the sister of Turambar her husband, causing her to throw herself into the gorge of Cabed-en-Aras."@en .
+
+narn:ActI a plot:Exposition ;
+    rdfs:label "Act I - The House of Hurin"@en ;
+    rdfs:comment "Introduction of Hurin, Morwen, and young Turin. The Battle of Unnumbered Tears and the curse of Morgoth."@en ;
+    plot:describesEvent narn:NirnaethArnoediad, narn:HurinCaptured ;
+    plot:nextUnit narn:ActII .
+
+narn:ActII a plot:Act ;
+    rdfs:label "Act II - Exile of Turin"@en ;
+    rdfs:comment "Turin's exile from Doriath, his time at Amon Rudh, and arrival at Nargothrond."@en ;
+    plot:describesEvent narn:TurinExiled, narn:FallOfNargothrond ;
+    plot:previousUnit narn:ActI ;
+    plot:nextUnit narn:ActIII .
+# Note: chapters within ActII are linked via plot:nextUnit / plot:previousUnit chains below
+
+narn:ChapterAmonRudh a plot:Chapter ;
+    rdfs:label "Chapter: Amon Rudh"@en ;
+    rdfs:comment "Turin's time as an outlaw at Amon Rudh with Mim the Petty-dwarf."@en ;
+    plot:describesEvent narn:TurinGoesToAmonRudh ;
+    plot:nextUnit narn:ChapterNargothrond .
+
+narn:ChapterNargothrond a plot:Chapter ;
+    rdfs:label "Chapter: Nargothrond"@en ;
+    rdfs:comment "Turin's years at Nargothrond and its eventual fall to Glaurung."@en ;
+    plot:describesEvent narn:TurinGoesToNargothrond, narn:FallOfNargothrond ;
+    plot:previousUnit narn:ChapterAmonRudh .
+
+narn:ActIII a plot:Climax ;
+    rdfs:label "Act III - The Doom of Turin"@en ;
+    rdfs:comment "Turin's final days in Brethil, slaying of Glaurung, revelation of Nienor's identity, and death of Turin."@en ;
+    plot:describesEvent narn:TurinSlaysGlaurung, narn:DeathOfNienor, narn:DeathOfTurin ;
+    plot:previousUnit narn:ActII .
+# Note: scenes within ActIII are linked via plot:nextUnit / plot:previousUnit chains below
+
+narn:SceneSuicide a plot:Scene ;
+    rdfs:label "Scene: Turin's suicide"@en ;
+    rdfs:comment "The final scene in which Turin, having learned that Nienor was his sister, commands Gurthang to slay him."@en ;
+    plot:describesEvent narn:DeathOfTurin ;
+    plot:nextUnit narn:ResolutionAct .
+
+narn:ResolutionAct a plot:Resolution ;
+    rdfs:label "Resolution: The curse fulfilled"@en ;
+    rdfs:comment "The closing of the story: all three children of Hurin are dead, and Morgoth's curse is complete."@en ;
+    plot:describesEvent narn:DeathOfTurin ;
+    plot:previousUnit narn:SceneSuicide .
+
+#################################################################
+#    ADDITIONAL INSTANCES FOR COMPLETE COVERAGE
+#################################################################
+
+# meo:Torog (Troll) — illustrate this class with a genuine troll from the Narn's wider world
+narn:GothrogTroll a meo:Torog ;
+    rdfs:label "Gothmog's troll-guard"@en ;
+    rdfs:comment "One of the Torog (Troll) guards of Angband serving Morgoth, illustrating the meo:Torog class."@en ;
+    soc:served meo:morgoth .
+
+# Draugluin — the great werewolf, servant of Sauron; modelled as meo:EvilBeing since the MEO
+# ontology has no dedicated werewolf class (meo:Torog is specifically Trolls, meo:Lócë is Dragons)
+narn:Draugluin a meo:EvilBeing ;
+    rdfs:label "Draugluin"@sjn ;
+    rdfs:comment "The great werewolf, sire of all werewolves, servant of Sauron in Angband."@en ;
+    soc:served meo:morgoth ;
+    soc:isServantOf meo:sauron .
+
+# loc:Valley (there's no valley in the Narn proper, use the Vale of Sirion)
+narn:ValeOfSirion a loc:Valley ;
+    rdfs:label "Vale of Sirion"@sjn ;
+    rdfs:comment "The long valley through which the river Sirion flows, forming the spine of central Beleriand."@en ;
+    loc:isAPartOf narn:Beleriand ;
+    loc:isLocatedIn narn:Beleriand .
+
+# meo:eru is already defined in meo.ttl as a meo:God individual — re-assert it here to show the class
+meo:eru rdf:type meo:God .
